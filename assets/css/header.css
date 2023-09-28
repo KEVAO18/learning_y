@@ -1,0 +1,22 @@
+header{
+    left: 0;
+    background: url("../img/forest-3622519_960_720.jpg");
+    background-position: bottom;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 50vh;
+}
+
+header> div{
+    padding-top: calc(50vh/3);
+}
+
+header > div > h1{
+    margin: 0 30vw;
+    background: #202b2a55;
+    color: antiquewhite;
+    padding: 2rem 0;
+    border-radius: 100px 10px;
+}
