@@ -159,6 +159,8 @@ namespace controller {
 		 * 
 		 * @param string $tabla es la tabla a la que se le quiere actualizar
 		 * 
+		 * @param int $n numero de valores a cambiar
+		 * 
 		 * @param string $columna columna definida para actualizar
 		 * 
 		 * @param int $id clave primaria de la tabla, usada para comparar campos y encontrar la fila deseada
@@ -167,15 +169,33 @@ namespace controller {
 		 * 
 		 * @param string $oper valor definido para eloperador de la comparacion, es = por defecto
 		 * 
-		 * @method update($tabla, $columna, $id, $val, $oper = '=') el metodo se usa para actualizar datos de una columna definida previamente
+		 * @method update($tabla, $columna, $id, $val, $oper) el metodo se usa para actualizar datos de una columna definida previamente
+		 * 
+		 * @method update($tabla, $n, $columna, $id, $val, $oper) el metodo se usa para actualizar datos de una columna definida previamente
+		 * 
+		 * @method update($tabla, $n, $columna, $id, $val) el metodo se usa para actualizar datos de una columna definida previamente
 		 * 
 		 * @method update($tabla, $columna, $id, $val) el metodo se usa para actualizar datos de una columna definida previamente
 		 * 
 		 */
 
-		public function update($tabla, $columna, $id, $val, $oper = '=')
+		public function update($tabla, $n = 1, $columna, $id, $val, $oper = '=')
 		{
-			$q = $this->consultaSQL("UPDATE $tabla SET $columna = '$val' WHERE id $oper $id");
+
+			if($n == 1){
+
+				$q = $this->consultaSQL("UPDATE $tabla SET $columna = '$val' WHERE id $oper $id");
+
+			}else if($n > 1){
+
+				for($i = 0; $i < $n; $i++){
+
+					$q = $this->consultaSQL("UPDATE $tabla SET $columna[$i] = '$val[$i]' WHERE id $oper $id");
+
+				}
+
+			}
+
 		}
 
 		/**

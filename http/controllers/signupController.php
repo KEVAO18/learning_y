@@ -6,14 +6,15 @@ use http\handler\signup;
 
 $signUp = new signup;
 
-$datos = $signUp->signUp(
-    explode("'",$_POST['name'])[0], 
-    explode("'",$_POST['user'])[0], 
-    explode("'",$_POST['mail'])[0], 
-    explode("'",$_POST['pass'])[0], 
-    explode("'",$_POST['date'])[0], 
-    explode("'",$_POST['tyc'])[0]
+$signUp->signUp(
+    $_POST['name'], 
+    $_POST['user'], 
+    $_POST['mail'], 
+    $_POST['pass'], 
+    $_POST['date'], 
+    $_POST['tyc']
 );
+
 
 header("location: ".$_ENV['PAGE_SERVE']."/login");
 

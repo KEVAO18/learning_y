@@ -18,35 +18,44 @@ namespace db\models {
 
         public function toJson(){
 
-            return json_encode(
-                array(
-                    "id" => $this->getId(),
-                    "profesor" =>$this->getProfesor(),
-                    "nombre" => $this->getNomCurso(),
-                    "descripcion" => $this->getDescipcion()
-                )
-            );
-            
+			return json_encode(
+				array(
+					"id" => $this->getId(),
+					"profesor" =>$this->getProfesor(),
+					"nombre" => $this->getNomCurso(),
+					"descripcion" => $this->getDescipcion()
+				)
+			);
+
         }
 
         public function toArray(){
 
-            return array(
-                "id" => $this->getId(),
-                "profesor" =>$this->getProfesor(),
-                "nombre" => $this->getNomCurso(),
-                "descripcion" => $this->getDescipcion()
-            );
+			return array(
+					"id" => $this->getId(),
+					"profesor" =>$this->getProfesor(),
+					"nombre" => $this->getNomCurso(),
+					"descripcion" => $this->getDescipcion()
+			);
 
         }
 
         public function toString(){
 
-            return "id: ".$this->getId().
-                ", profesor: ".$this->getProfesor().
-                ", nombre: ".$this->getNomCurso().
-                ", descripcion: ".$this->getDescipcion();
-            
+			return "id: ".$this->getId().
+					", profesor: ".$this->getProfesor().
+					", nombre: ".$this->getNomCurso().
+					", descripcion: ".$this->getDescipcion();
+
+        }
+
+        public function setAll($id, $profesor, $nom_curso, $descipcion) {
+
+			$this->setId($id);
+			$this->setProfesor($profesor);
+			$this->setNomCurso($nom_curso);
+			$this->setDescipcion($descipcion);
+
         }
 
         /**

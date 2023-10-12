@@ -36,19 +36,26 @@ namespace http\handler {
 
             $this->getmodeloCred()
                     ->setIdUser(
-                        "'".$id_user."'"
+                        'NULL'
+                    );
+
+            $this->getmodeloCred()
+                    ->setIdUser(
+                        $id_user
                     );
 
             $this->getmodeloCred()
                     ->setCredentialType(
-                        "'".$type."'"
+                        $type
                     );
 
             return $this->getSql()
-            ->where(
-                "usuarios",
-                "id = ".$this->getmodeloCred()->getIdUser()
+            ->insert(
+                "credentials",
+                "`id`, `id_user`, `credential_type`",
+                $this->getmodeloCred()->toString()
             );
+
         }
 
         /**

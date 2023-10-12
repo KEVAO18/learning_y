@@ -3,9 +3,6 @@
 namespace http\handler {
 
     require_once("../../db/models/userModel.php");
-    require_once("../config/sql.php");
-
-    use controller\sql as sql;
     use db\models\user as ModUser;
 
 
@@ -21,65 +18,18 @@ namespace http\handler {
             $this->setModeloRegistro(
                 new ModUser
             );
-
-            $this->setSql(
-                new sql
-            );
         }
 
         /**
          * metodo manejador de los regostros, se encarga de comunicar las demas partes del con la base de datos
          */
-        function signUp($nombre, $user, $mail, $pass, $date, $tyc)
+        public function signUp($nombre, $user, $mail, $pass, $date, $tyc)
         {
 
-            $this->getModeloRegistro()
-                    ->setNombre(
-                        "'".$nombre."', "
-                    );
-
-            $this->getModeloRegistro()
-                    ->setUser(
-                        "'".$user."', "
-                    );
-
-            $this->getModeloRegistro()
-                    ->setMail(
-                        "'".$mail."', "
-                    );
-
-            $this->getModeloRegistro()
-                    ->setPassword(
-                        "'".$pass."', "
-                    );
-
-            $this->getModeloRegistro()
-                    ->setBirthday(
-                        "'".$date."', "
-                    );
-
-            $this->getModeloRegistro()
-                    ->setTyc(
-                        "'".$tyc."'"
-                    );
-
-            return $this->getSql()
-                    ->insert(
-                        "usuarios",
-                        "name,
-                        user,
-                        mail,
-                        password,
-                        birthday,
-                        tyc",
-                        $this->getModeloRegistro()->getNombre().
-                        $this->getModeloRegistro()->getUser().
-                        $this->getModeloRegistro()->getMail().
-                        $this->getModeloRegistro()->getPassword().
-                        $this->getModeloRegistro()->getBirthday().
-                        $this->getModeloRegistro()->getTyc()
-                    );
+            return $this->getModeloRegistro()->save(0, $nombre, $user, $mail, $pass, $date, $tyc);
+                    
         }
+
 
         /**
          * Get the value of modeloRegistro
@@ -115,6 +65,7 @@ namespace http\handler {
                 return $this;
         }
     }
+
 }
 
 ?>

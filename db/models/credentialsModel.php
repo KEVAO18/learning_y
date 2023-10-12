@@ -1,7 +1,9 @@
 <?php
 
 namespace db\models {
-    
+
+    use http\handler\credential;
+
     class credentialsModel{
         
         private $id;
@@ -10,17 +12,25 @@ namespace db\models {
 
         private $credential_type;
 
+        private $state;
+
         public function __construct() {
 
         }
 
+        /**
+         * 
+         * @return json all data as a json
+         * 
+        */
         public function toJson(){
 
             return json_encode(
                 array(
                     "id" => $this->getId(),
                     "id_user" =>$this->getIdUser(),
-                    "credential_type" => $this->getCredentialType()
+                    "credential_type" => $this->getCredentialType(),
+                    "state" => $this->getState()
                 )
             );
             
@@ -31,17 +41,28 @@ namespace db\models {
             return array(
                 "id" => $this->getId(),
                 "id_user" =>$this->getIdUser(),
-                "credential_type" => $this->getCredentialType()
+                "credential_type" => $this->getCredentialType(),
+                "state" => $this->getState()
             );
 
         }
 
         public function toString(){
 
-            return "id: ".$this->getId().
-            ", id_user: ".$this->getIdUser().
-            ", credential_type: ".$this->getCredentialType();
+            return "'".$this->getId().
+            "', '".$this->getIdUser().
+            "', '".$this->getCredentialType().
+            "', '".$this->getState()."'";
             
+        }
+
+        public function setAll($id, $userId, $credential, $state) {
+            
+            $this->setId($id);
+            $this->setIdUser($userId);
+            $this->setCredentialType($credential);
+            $this->setState($state);
+
         }
 
         /**
@@ -94,6 +115,24 @@ namespace db\models {
         public function setCredentialType($credential_type): self
         {
                 $this->credential_type = $credential_type;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of state
+         */
+        public function getState()
+        {
+                return $this->state;
+        }
+
+        /**
+         * Set the value of state
+         */
+        public function setState($state): self
+        {
+                $this->state = $state;
 
                 return $this;
         }

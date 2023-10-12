@@ -1,6 +1,13 @@
 <?php
 
+
+
 namespace db\models {
+    
+    require_once("../../http/config/sql.php");
+
+    use controller\sql as sql;
+
 
     /**
      * 
@@ -46,29 +53,27 @@ namespace db\models {
          */
         private string $tyc;
 
+        /**
+         * @var sql $q
+         */
+        private sql $q;
+
         public function __construct(){
-
-        }
-
-        public function toJson()
-        {
-
-            return json_encode(
-                array(
-                    "id" => $this->getId(),
-                    "nombre" => $this->getNombre(),
-                    "usuario" =>$this->getUser(),
-                    "mail" => $this->getMail(),
-                    "password" => $this->getPassword(),
-                    "birthday" => $this->getBirthday(),
-                    "tyc" => $this->getTyc()
-                )
+            $this->setQ(
+                new sql
             );
         }
 
-        public function toArray()
-        {
 
+        /**
+         * 
+         * retorna un array con los datos del usuario que contiene el objeto
+         * 
+         * @return array array de los daros que contiene el objeto
+         * 
+         */
+        public function toArray(){
+            
             return array(
                 "id" => $this->getId(),
                 "nombre" => $this->getNombre(),
@@ -78,18 +83,63 @@ namespace db\models {
                 "birthday" => $this->getBirthday(),
                 "tyc" => $this->getTyc()
             );
+            
+        }
+
+        /**
+         * 
+         * retorna un texto en formato json con los datos del usuario que contiene el objeto
+         * 
+         * @return string texto en formato json con daros que contiene el objeto
+         * 
+         */
+        public function toJson(){
+
+            return json_encode(
+                $this->toArray()
+            );
+
+        }
+        
+        public function toString(){
+
+            return "'".$this->getId().
+            "', '".$this->getNombre().
+            "', '".$this->getUser().
+            "', '".$this->getMail().
+            "', '".$this->getPassword().
+            "', '".$this->getBirthday().
+            "', '".$this->getTyc()."'";
 
         }
 
-        public function toString()
-        {
-            return "'".$this->getId().
-            ", nombre: ".$this->getNombre().
-            ", usuario: ".$this->getUser().
-            ", mail: ".$this->getMail().
-            ", password: ".$this->getPassword().
-            ", birthday: ".$this->getBirthday().
-            ", tyc: ".$this->getTyc();
+        public function save(
+            int $id, 
+            string $nombre, 
+            string $user, 
+            string $mail, 
+            string $password, 
+            string $birthday, 
+            string $tyc
+            ) {
+            
+                $this->setId($id);
+                $this->setNombre($nombre);
+                $this->setUser($user);
+                $this->setMail($mail);
+                $this->setPassword($password);
+                $this->setBirthday($birthday);
+                $this->setTyc($tyc);
+
+                $columnas = "id, name, user, mail, password, birthday, tyc";
+
+                $this->getQ()->insert('usuarios', $columnas, $this->toString());
+        }
+
+        public function delete(int $id) {
+
+            $this->getQ()->delete('usuarios', 'id', $id);
+
         }
 
         /**
@@ -217,5 +267,25 @@ namespace db\models {
 
             return $this;
         }
+
+        /**
+         * Get the value of q
+         */
+        public function getQ(): sql
+        {
+                return $this->q;
+        }
+
+        /**
+         * Set the value of q
+         */
+        public function setQ(sql $q): self
+        {
+                $this->q = $q;
+
+                return $this;
+        }
+
     }
+
 }

@@ -5,7 +5,15 @@
 - usuarios
 
 ```sql
-
+CREATE TABLE `usuarios` (
+  `id` int(11) NOT NULL,
+  `name` varchar(60) NOT NULL,
+  `user` varchar(40) NOT NULL,
+  `mail` varchar(50) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `birthday` date NOT NULL,
+  `tyc` varchar(10) NOT NULL
+);
 ```
 
 - credentials
@@ -32,23 +40,41 @@ create table credentials(
 
 ```
 
-- credentials
+- peticiones
 
 ```sql
-create table peticiones(
-    id int AUTO_INCREMENT,
-    id_user int(11) not null,
-    id_cred int(11) not null,
-    estado tinyint not null,
+create table peticiones( 
+    id int AUTO_INCREMENT, 
+    id_user int(11) not null, 
+    type int(11) not null, 
+
+    PRIMARY KEY(id), 
+
+    CONSTRAINT user_petition 
+    FOREIGN KEY (id_user) 
+    REFERENCES usuarios(id), 
     
-    PRIMARY KEY (`id`),
+    CONSTRAINT user_credenType 
+    FOREIGN KEY (type) 
+    REFERENCES credentialstypes(id) 
+);
+```
+
+- creador_curso
+
+```sql
+create table creador_curso( 
+    id_user int(11) not null, 
+    id_curso int(11) not null, 
     
-    CONSTRAINT user_petition
-    FOREIGN KEY (`id_user`)
-    REFERENCES usuarios(`id`),
+    PRIMARY KEY(id_user, id_curso), 
+
+    CONSTRAINT user_creador 
+    FOREIGN KEY (id_user) 
+    REFERENCES usuarios(id), 
     
-    CONSTRAINT credentials_petition
-    FOREIGN KEY (`id_cred`)
-    REFERENCES credentials(`id`)
+    CONSTRAINT curso_creador 
+    FOREIGN KEY (id_curso) 
+    REFERENCES cursos(id) 
 );
 ```
