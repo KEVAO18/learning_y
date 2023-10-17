@@ -32,22 +32,8 @@ namespace http\handler {
          */
         function logIn($user, $pass)
         {
-
-            $this->getModeloRegistro()
-                    ->setUser(
-                        "'".$user."'"
-                    );
-
-            $this->getModeloRegistro()
-                    ->setPassword(
-                        "'".$pass."'"
-                    );
-
-            return $this->getSql()
-                    ->where(
-                        "usuarios",
-                        "user = ".$this->getModeloRegistro()->getUser()." AND password = ".$this->getModeloRegistro()->getPassword()
-                    );
+            return $this->getModeloRegistro()
+                    ->find("user = ".$user." AND password = ".$pass);
         }
 
         /**

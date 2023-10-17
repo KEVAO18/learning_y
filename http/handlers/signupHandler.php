@@ -27,7 +27,7 @@ namespace http\handler {
         {
 
             return $this->getModeloRegistro()->save(0, $nombre, $user, $mail, $pass, $date, $tyc);
-                    
+
         }
 
 

@@ -12,7 +12,6 @@ class navbar{
         if(!$datos){
             $this->outLog();
         }else{
-            echo 
             $this->logged(json_decode($_SESSION['userData'])->user);
         }
     }

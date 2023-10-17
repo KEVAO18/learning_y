@@ -1,22 +1,34 @@
 <?php
 
-
-
 namespace db\models {
     
     require_once("../../http/config/sql.php");
 
     use controller\sql as sql;
 
-
     /**
      * 
      * clase modelo de el objeto usuario
      * 
+     * @since 28/09/2023
+     * 
+     * @version 1.2
+     * 
+     * @author KEVAO18
+     * 
+     * @method find(string $op)
+     * 
+     * @method toArray()
+     * 
+     * @method toJson()
+     * 
+     * @method toString()
+     * 
+     * @method save(int $id, string $nombre, string $user, string $mail, string $password, string $birthday, string $tyc)
+     * 
+     * @method delete(int $id)
      */
-    class user
-    {
-
+    class user{
         
         /**
          * @var string $id
@@ -64,20 +76,73 @@ namespace db\models {
             );
         }
 
+        public function setAll(
+            int $id, 
+            string $nombre, 
+            string $user, 
+            string $mail, 
+            string $password, 
+            string $birthday, 
+            string $tyc
+            ) {
+        
+            $this->setId($id);
+            $this->setNombre($nombre);
+            $this->setUser($user);
+            $this->setMail($mail);
+            $this->setPassword($password);
+            $this->setBirthday($birthday);
+            $this->setTyc($tyc);
+
+        }
+
+        /**
+         * busca un usuario y retorna un objeto de tipo user que contiene 
+         * toda la informacion de este usuario
+         * 
+         * @param string $op
+         * 
+         * @since 16/10/2023
+         * 
+         * @return $this objeto de tipo user
+         */
+        public function find(string $op) {
+
+            try {
+                $datos = $this->getQ()->where('usuarios', $op);
+
+                foreach ($datos as $d) {
+                    $this->setAll(
+                        $d['id'],
+                        $d['name'],
+                        $d['user'],
+                        $d['mail'],
+                        $d['password'],
+                        $d['birthday'],
+                        $d['tyc']
+                    );
+                }
+    
+                return $this;
+            } catch (\Throwable $th) {
+                echo "Error: ".$th;
+            }
+
+        }
 
         /**
          * 
          * retorna un array con los datos del usuario que contiene el objeto
          * 
-         * @return array array de los daros que contiene el objeto
+         * @return array array de los datos que contiene el objeto
          * 
          */
         public function toArray(){
             
             return array(
                 "id" => $this->getId(),
-                "nombre" => $this->getNombre(),
-                "usuario" =>$this->getUser(),
+                "name" => $this->getNombre(),
+                "user" =>$this->getUser(),
                 "mail" => $this->getMail(),
                 "password" => $this->getPassword(),
                 "birthday" => $this->getBirthday(),
@@ -90,7 +155,7 @@ namespace db\models {
          * 
          * retorna un texto en formato json con los datos del usuario que contiene el objeto
          * 
-         * @return string texto en formato json con daros que contiene el objeto
+         * @return string texto en formato json con datos que contiene el objeto
          * 
          */
         public function toJson(){
@@ -101,6 +166,13 @@ namespace db\models {
 
         }
         
+        /**
+         * 
+         * retorna un texto con los datos del usuario que contiene el objeto
+         * 
+         * @return string texto con datos que contiene el objeto
+         * 
+         */
         public function toString(){
 
             return "'".$this->getId().
@@ -113,6 +185,25 @@ namespace db\models {
 
         }
 
+        /**
+         * 
+         * guardar una tupla en la base de datos
+         * 
+         * @param int $id
+         * 
+         * @param string $nombre
+         * 
+         * @param string $user
+         * 
+         * @param string $mail
+         * 
+         * @param string $password
+         * 
+         * @param string $birthday
+         * 
+         * @param string $tyc
+         * 
+         */
         public function save(
             int $id, 
             string $nombre, 
@@ -136,6 +227,11 @@ namespace db\models {
                 $this->getQ()->insert('usuarios', $columnas, $this->toString());
         }
 
+        /**
+         * eliminar dato de la base de datos
+         * 
+         * @param int $id
+         */
         public function delete(int $id) {
 
             $this->getQ()->delete('usuarios', 'id', $id);
@@ -145,16 +241,14 @@ namespace db\models {
         /**
          * Get the value of the id
          */
-        public function getId()
-        {
+        public function getId(){
             return $this->id;
         }
 
         /**
          * Set the value of the id
          */
-        public function setId(int $id): self
-        {
+        public function setId(int $id): self{
             $this->id = $id;
 
             return $this;
@@ -163,16 +257,14 @@ namespace db\models {
         /**
          * Get the value of nombre
          */
-        public function getNombre()
-        {
+        public function getNombre(){
             return $this->nombre;
         }
 
         /**
          * Set the value of nombre
          */
-        public function setNombre(string $nombre): self
-        {
+        public function setNombre(string $nombre): self{
             $this->nombre = $nombre;
 
             return $this;
@@ -181,16 +273,14 @@ namespace db\models {
         /**
          * Get the value of user
          */
-        public function getUser()
-        {
+        public function getUser(){
             return $this->user;
         }
 
         /**
          * Set the value of user
          */
-        public function setUser(string $user): self
-        {
+        public function setUser(string $user): self{
             $this->user = $user;
 
             return $this;
@@ -199,16 +289,14 @@ namespace db\models {
         /**
          * Get the value of mail
          */
-        public function getMail()
-        {
+        public function getMail(){
             return $this->mail;
         }
 
         /**
          * Set the value of mail
          */
-        public function setMail(string $mail): self
-        {
+        public function setMail(string $mail): self{
             $this->mail = $mail;
 
             return $this;
@@ -217,16 +305,14 @@ namespace db\models {
         /**
          * Get the value of password
          */
-        public function getPassword()
-        {
+        public function getPassword(){
             return $this->password;
         }
 
         /**
          * Set the value of password
          */
-        public function setPassword(string $password): self
-        {
+        public function setPassword(string $password): self{
             $this->password = $password;
 
             return $this;
@@ -235,16 +321,14 @@ namespace db\models {
         /**
          * Get the value of birthday
          */
-        public function getBirthday()
-        {
+        public function getBirthday(){
             return $this->birthday;
         }
 
         /**
          * Set the value of birthday
          */
-        public function setBirthday(string $birthday): self
-        {
+        public function setBirthday(string $birthday): self{
             $this->birthday = $birthday;
 
             return $this;
@@ -253,16 +337,14 @@ namespace db\models {
         /**
          * Get the value of tyc
          */
-        public function getTyc()
-        {
+        public function getTyc(){
             return $this->tyc;
         }
 
         /**
          * Set the value of tyc
          */
-        public function setTyc(string $tyc): self
-        {
+        public function setTyc(string $tyc): self{
             $this->tyc = $tyc;
 
             return $this;
@@ -271,16 +353,14 @@ namespace db\models {
         /**
          * Get the value of q
          */
-        public function getQ(): sql
-        {
+        public function getQ(): sql{
                 return $this->q;
         }
 
         /**
          * Set the value of q
          */
-        public function setQ(sql $q): self
-        {
+        public function setQ(sql $q): self{
                 $this->q = $q;
 
                 return $this;
