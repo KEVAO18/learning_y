@@ -76,60 +76,6 @@ namespace db\models {
             );
         }
 
-        public function setAll(
-            int $id, 
-            string $nombre, 
-            string $user, 
-            string $mail, 
-            string $password, 
-            string $birthday, 
-            string $tyc
-            ) {
-        
-            $this->setId($id);
-            $this->setNombre($nombre);
-            $this->setUser($user);
-            $this->setMail($mail);
-            $this->setPassword($password);
-            $this->setBirthday($birthday);
-            $this->setTyc($tyc);
-
-        }
-
-        /**
-         * busca un usuario y retorna un objeto de tipo user que contiene 
-         * toda la informacion de este usuario
-         * 
-         * @param string $op
-         * 
-         * @since 16/10/2023
-         * 
-         * @return $this objeto de tipo user
-         */
-        public function find(string $op) {
-
-            try {
-                $datos = $this->getQ()->where('usuarios', $op);
-
-                foreach ($datos as $d) {
-                    $this->setAll(
-                        $d['id'],
-                        $d['name'],
-                        $d['user'],
-                        $d['mail'],
-                        $d['password'],
-                        $d['birthday'],
-                        $d['tyc']
-                    );
-                }
-    
-                return $this;
-            } catch (\Throwable $th) {
-                echo "Error: ".$th;
-            }
-
-        }
-
         /**
          * 
          * retorna un array con los datos del usuario que contiene el objeto
@@ -182,6 +128,79 @@ namespace db\models {
             "', '".$this->getPassword().
             "', '".$this->getBirthday().
             "', '".$this->getTyc()."'";
+
+        }
+
+        /**
+         * asigna un valor a todos los atributos de la clase
+         * 
+         * @since 16/10/2023
+         * 
+         * @param int $id
+         * 
+         * @param string $nombre
+         * 
+         * @param string $user
+         * 
+         * @param string $mail
+         * 
+         * @param string $password
+         * 
+         * @param string $birthday
+         * 
+         * @param string $tyc
+         */
+        public function setAll(
+            int $id, 
+            string $nombre, 
+            string $user, 
+            string $mail, 
+            string $password, 
+            string $birthday, 
+            string $tyc
+            ) {
+        
+            $this->setId($id);
+            $this->setNombre($nombre);
+            $this->setUser($user);
+            $this->setMail($mail);
+            $this->setPassword($password);
+            $this->setBirthday($birthday);
+            $this->setTyc($tyc);
+
+        }
+
+        /**
+         * busca un usuario y retorna un objeto de tipo user que contiene 
+         * toda la informacion de este usuario
+         * 
+         * @param string $op
+         * 
+         * @since 16/10/2023
+         * 
+         * @return $this objeto de tipo user
+         */
+        public function find(string $op) {
+
+            try {
+                $datos = $this->getQ()->where('usuarios', $op);
+
+                foreach ($datos as $d) {
+                    $this->setAll(
+                        $d['id'],
+                        $d['name'],
+                        $d['user'],
+                        $d['mail'],
+                        $d['password'],
+                        $d['birthday'],
+                        $d['tyc']
+                    );
+                }
+    
+                return $this;
+            } catch (\Throwable $th) {
+                echo "Error";
+            }
 
         }
 

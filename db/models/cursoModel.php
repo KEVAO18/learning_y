@@ -1,133 +1,275 @@
 <?php
 
 namespace db\models {
+
+    require_once("../../http/config/sql.php");
+
+    use db\models\user;
+
+    use controller\sql as sql;
     class cursoModel
     {
-        
-        private $id;
+	
+	private int $id;
 
-        private $profesor;
+	private user $profesor;
 
-        private $nom_curso;
+	private string $nom_curso;
 
-        private $descipcion;
+	private string $descipcion;
 
-        public function __construct() {
-                
-        }
+	private sql $q;
 
-        public function toJson(){
+	public function __construct() {
+		
+	}
 
-			return json_encode(
-				array(
-					"id" => $this->getId(),
-					"profesor" =>$this->getProfesor(),
-					"nombre" => $this->getNomCurso(),
-					"descripcion" => $this->getDescipcion()
-				)
-			);
+	/**
+	 * 
+	 * retorna un texto en formato json con los datos del curso que contiene el objeto
+	 * 
+	 * @return string texto en formato json con datos que contiene el objeto
+	 * 
+	 */
+	public function toJson()
+	{
 
-        }
+		return json_encode(
+			$this->toArray()
+		);
+	}
 
-        public function toArray(){
+	/**
+	 * 
+	 * retorna un array con los datos del curso que contiene el objeto
+	 * 
+	 * @return array array de los datos que contiene el objeto
+	 * 
+	 */
+	public function toArray(){
 
-			return array(
-					"id" => $this->getId(),
-					"profesor" =>$this->getProfesor(),
-					"nombre" => $this->getNomCurso(),
-					"descripcion" => $this->getDescipcion()
-			);
+		return array(
+			"id" => $this->getId(),
+			"profesor" =>$this->getProfesor()->toArray(),
+			"nombre" => $this->getNomCurso(),
+			"descripcion" => $this->getDescipcion()
+		);
 
-        }
+	}
 
-        public function toString(){
+	/**
+	 * 
+	 * retorna un texto con los datos del curso que contiene el objeto
+	 * 
+	 * @return string texto con datos que contiene el objeto
+	 * 
+	 */
+	public function toString(){
 
-			return "id: ".$this->getId().
-					", profesor: ".$this->getProfesor().
-					", nombre: ".$this->getNomCurso().
-					", descripcion: ".$this->getDescipcion();
+		return "'".$this->getId().
+			"', '".$this->getProfesor()->getId().
+			"', '".$this->getNomCurso().
+			"', '".$this->getDescipcion()."'";
 
-        }
+	}
 
-        public function setAll($id, $profesor, $nom_curso, $descipcion) {
-
+	/**
+	 * asigna un valor a todos los atributos de la clase
+	 * 
+	 * @since 17/10/2023
+	 * 
+	 * @param int  $id
+	 * 
+	 * @param user $profesor
+	 * 
+	 * @param string $nom_curso
+	 * 
+	 * @param string $descipcion
+	 */
+	public function setAll(
+		int $id, 
+		user $profesor, 
+		string $nom_curso, 
+		string $descipcion
+		) {
 			$this->setId($id);
 			$this->setProfesor($profesor);
 			$this->setNomCurso($nom_curso);
 			$this->setDescipcion($descipcion);
 
-        }
+	}
 
-        /**
-         * Get the value of id
-         */
-        public function getId()
-        {
-                return $this->id;
-        }
+	/**
+	 * busca una peticion y retorna un objeto de tipo peticiones que contiene 
+	 * toda la informacion de este objeto
+	 * 
+	 * @param string $op codigo contenido del where que va a hacer la comparacion 
+	 * el los datos de la base de datos
+	 * 
+	 * @since 16/10/2023
+	 * 
+	 * @return $this objeto de tipo user
+	 */
+	public function find(string $op)
+	{
 
-        /**
-         * Set the value of id
-         */
-        public function setId($id): self
-        {
-                $this->id = $id;
+		try {
+			$temp_user = new user;
 
-                return $this;
-        }
+			$datos = $this->getQ()->where('cursos', $op);
 
-        /**
-         * Get the value of profesor
-         */
-        public function getProfesor()
-        {
-                return $this->profesor;
-        }
+			foreach ($datos as $d) {
+				$this->setAll(
+					$d['id'],
+					$temp_user->find("id = ".$d['profesor']),
+					$d['nom_curso'],
+					$d['descripcion	']
+				);
+			}
 
-        /**
-         * Set the value of profesor
-         */
-        public function setProfesor($profesor): self
-        {
-                $this->profesor = $profesor;
+			return $this;
+		} catch (\Throwable $th) {
+			echo "Error";
+		}
+	}
 
-                return $this;
-        }
+	/**
+	 * guardar una tupla en la base de datos
+	 * 
+	 * @param int $id
+	 * 
+	 * @param user $profesor
+	 * 
+	 * @param string $nom_curso
+	 * 
+	 * @param string $descipcion
+	 */
+	public function save(
+		int $id,
+		user $profesor,
+		string $nom_curso,
+		string $descipcion
+	) {
 
-        /**
-         * Get the value of nom_curso
-         */
-        public function getNomCurso()
-        {
-                return $this->nom_curso;
-        }
+		try {
+			$user = new user;
 
-        /**
-         * Set the value of nom_curso
-         */
-        public function setNomCurso($nom_curso): self
-        {
-                $this->nom_curso = $nom_curso;
+			$this->setAll(
+				$id,
+				$profesor,
+				$nom_curso,
+				$descipcion
+			);
 
-                return $this;
-        }
+			$columnas = "id, profesor, nom_curso, descripcion";
 
-        /**
-         * Get the value of descipcion
-         */
-        public function getDescipcion()
-        {
-                return $this->descipcion;
-        }
+			$this->getQ()->insert('cursos', $columnas, $this->toString());
+		} catch (\Throwable $th) {
+			echo "Error";
+		}
+	}
 
-        /**
-         * Set the value of descipcion
-         */
-        public function setDescipcion($descipcion): self
-        {
-                $this->descipcion = $descipcion;
+	/**
+	 * elimina tupla de la base de datos
+	 * 
+	 * @param int $id
+	 */
+	public function delete(int $id)
+	{
 
-                return $this;
-        }
+		$this->getQ()->delete('cursos', 'id', $id);
+	}
+
+	/**
+	 * Get the value of id
+	 */
+	public function getId(): int
+	{
+		return $this->id;
+	}
+
+	/**
+	 * Set the value of id
+	 */
+	public function setId(int $id): self
+	{
+		$this->id = $id;
+
+		return $this;
+	}
+
+	/**
+	 * Get the value of profesor
+	 */
+	public function getProfesor(): user
+	{
+		return $this->profesor;
+	}
+
+	/**
+	 * Set the value of profesor
+	 */
+	public function setProfesor(user $profesor): self
+	{
+		$this->profesor = $profesor;
+
+		return $this;
+	}
+
+	/**
+	 * Get the value of nom_curso
+	 */
+	public function getNomCurso(): string
+	{
+		return $this->nom_curso;
+	}
+
+	/**
+	 * Set the value of nom_curso
+	 */
+	public function setNomCurso(string $nom_curso): self
+	{
+		$this->nom_curso = $nom_curso;
+
+		return $this;
+	}
+
+	/**
+	 * Get the value of descipcion
+	 */
+	public function getDescipcion(): string
+	{
+		return $this->descipcion;
+	}
+
+	/**
+	 * Set the value of descipcion
+	 */
+	public function setDescipcion(string $descipcion): self
+	{
+		$this->descipcion = $descipcion;
+
+		return $this;
+	}
+
+	/**
+	 * Get the value of q
+	 */
+	public function getQ(): sql
+	{
+		return $this->q;
+	}
+
+	/**
+	 * Set the value of q
+	 */
+	public function setQ(sql $q): self
+	{
+		$this->q = $q;
+
+		return $this;
+	}
+
     }
+
 }

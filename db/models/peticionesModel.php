@@ -2,202 +2,244 @@
 
 namespace db\models {
 
-require_once("../../http/config/sql.php");
+    require_once("../../http/config/sql.php");
 
-use controller\sql as sql;
+    use db\models\user;
 
-    class peticionesModel{
+    use controller\sql as sql;
 
-        private $id;
+    class peticionesModel
+    {
 
-        private $id_user;
+        private int $id;
 
-        private $estado;
+        private user $id_user;
 
-		/**
+        private int $estado;
+
+        /**
          * @var sql $q
          */
         private sql $q;
-        
-        public function __construct() {
-            
+
+        public function __construct()
+        {
         }
 
-		/**
+        /**
          * 
-         * retorna un texto en formato json con los datos del usuario que contiene el objeto
+         * retorna un texto en formato json con los datos de la peticion que contiene el objeto
          * 
          * @return string texto en formato json con datos que contiene el objeto
          * 
          */
-        public function toJson(){
+        public function toJson()
+        {
 
             return json_encode(
-                array(
-                    "id" => $this->getId(),
-                    "id_user" =>$this->getIdUser(),
-                    "estado" => $this->getEstado()
-                )
+                $this->toArray()
             );
-            
         }
 
-		/**
+        /**
          * 
-         * retorna un array con los datos del usuario que contiene el objeto
+         * retorna un array con los datos de la peticion que contiene el objeto
          * 
          * @return array array de los datos que contiene el objeto
          * 
          */
-        public function toArray(){
+        public function toArray()
+        {
 
             return array(
                 "id" => $this->getId(),
-                "id_user" =>$this->getIdUser(),
+                "id_user" => $this->getIdUser()->toArray(),
                 "estado" => $this->getEstado()
             );
-
         }
 
-		/**
+        /**
          * 
-         * retorna un texto con los datos del usuario que contiene el objeto
+         * retorna un texto con los datos de la peticion que contiene el objeto
          * 
          * @return string texto con datos que contiene el objeto
          * 
          */
-        public function toString(){
+        public function toString()
+        {
 
-            return "id".$this->getId().
-                ", id_user".$this->getIdUser().
-                ", estado".$this->getEstado();
-            
+            return "'" . $this->getId() .
+                "', 'id_user'" . $this->getIdUser()->getId() .
+                "', '" . $this->getEstado() . "'";
         }
 
-		/**
-         * busca un usuario y retorna un objeto de tipo user que contiene 
-         * toda la informacion de este usuario
+        /**
+         * asigna un valor a todos los atributos de la clase
          * 
-         * @param string $op
+         * @since 17/10/2023
+         * 
+         * @param int $id
+         * 
+         * @param user $id_user
+         * 
+         * @param int $estado
+         */
+        public function setAll(
+            int $id,
+            user $id_user,
+            int $estado
+        ) {
+
+            $this->setId($id);
+            $this->setIdUser($id_user);
+            $this->setEstado($estado);
+        }
+
+        /**
+         * busca una peticion y retorna un objeto de tipo peticiones que contiene 
+         * toda la informacion de este objeto
+         * 
+         * @param string $op codigo contenido del where que va a hacer la comparacion 
+         * el los datos de la base de datos
          * 
          * @since 16/10/2023
          * 
          * @return $this objeto de tipo user
          */
-        public function find(string $op) {
+        public function find(string $op)
+        {
 
-            $datos = $this->getQ()->where('peticiones', $op);
+            try {
+                $temp_user = new user;
 
-            foreach ($datos as $d) {
-                $this->setId($d['id']);
-                $this->setIdUser($d['id_user']);
-                $this->setEstado($d['type']);
+                $datos = $this->getQ()->where('peticiones', $op);
+
+                foreach ($datos as $d) {
+                    $this->setAll(
+                        $d['id'],
+                        $temp_user->find("id = ".$d['id_user']),
+                        $d['type']
+                    );
+                }
+
+                return $this;
+            } catch (\Throwable $th) {
+                echo "Error";
             }
-
-            return $this;
-
         }
 
-		/**
+        /**
          * guardar una tupla en la base de datos
-		 * 
-		 * @param int $id
-		 * 
-		 * @param int $id_user
-		 * 
-		 * @param int $estado
+         * 
+         * @param int $id
+         * 
+         * @param user $id_user
+         * 
+         * @param int $estado
          */
-		public function save(
-			int $id,
-			int $id_user,
-			int $estado
-			) {
-            
-			$this->setId($id);
-			$this->setIdUser($id_user);
-			$this->setEstado($estado);
+        public function save(
+            int $id,
+            user $id_user,
+            int $estado
+        ) {
 
-			$columnas = "id, id_user, type";
+            try {
 
-			$this->getQ()->insert('peticiones', $columnas, $this->toString());
+                $this->setAll(
+                    $id,
+                    $id_user,
+                    $estado
+                );
+
+                $columnas = "id, id_user, type";
+
+                $this->getQ()->insert('peticiones', $columnas, $this->toString());
+            } catch (\Throwable $th) {
+                echo "Error";
+            }
         }
 
-		/**
-		 * elimina tupla de la base de datos
-		 * 
-		 * @param int $id
-		 */
-		public function delete(int $id) {
+        /**
+         * elimina tupla de la base de datos
+         * 
+         * @param int $id
+         */
+        public function delete(int $id)
+        {
 
             $this->getQ()->delete('peticiones', 'id', $id);
-
         }
 
         /**
          * Get the value of id
          */
-        public function getId(){
-			return $this->id;
+        public function getId(): int
+        {
+            return $this->id;
         }
 
         /**
          * Set the value of id
          */
-        public function setId($id): self{
-			$this->id = $id;
+        public function setId(int $id): self
+        {
+            $this->id = $id;
 
-			return $this;
+            return $this;
         }
 
         /**
          * Get the value of id_user
          */
-        public function getIdUser(){
-			return $this->id_user;
+        public function getIdUser(): user
+        {
+            return $this->id_user;
         }
 
         /**
          * Set the value of id_user
          */
-        public function setIdUser($id_user): self{
-			$this->id_user = $id_user;
+        public function setIdUser(user $id_user): self
+        {
+            $this->id_user = $id_user;
 
-			return $this;
+            return $this;
         }
 
         /**
          * Get the value of estado
          */
-        public function getEstado(){
-			return $this->estado;
+        public function getEstado(): int
+        {
+            return $this->estado;
         }
 
         /**
          * Set the value of estado
          */
-        public function setEstado($estado): self{
-			$this->estado = $estado;
+        public function setEstado(int $estado): self
+        {
+            $this->estado = $estado;
 
-			return $this;
+            return $this;
         }
 
-		/**
+        /**
          * Get the value of q
          */
-        public function getQ(): sql{
-			return $this->q;
-		}
+        public function getQ(): sql
+        {
+            return $this->q;
+        }
 
-		/**
-		 * Set the value of q
-		 */
-		public function setQ(sql $q): self{
-			$this->q = $q;
+        /**
+         * Set the value of q
+         */
+        public function setQ(sql $q): self
+        {
+            $this->q = $q;
 
-			return $this;
-		}
-
+            return $this;
+        }
     }
-    
-
 }
