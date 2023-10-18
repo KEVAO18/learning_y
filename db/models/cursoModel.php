@@ -2,12 +2,10 @@
 
 namespace db\models {
 
-    require_once("../../http/config/sql.php");
-
     use db\models\user;
 
     use controller\sql as sql;
-    class cursoModel
+    class curso
     {
 	
 	private int $id;
@@ -123,7 +121,7 @@ namespace db\models {
 					$d['id'],
 					$temp_user->find("id = ".$d['profesor']),
 					$d['nom_curso'],
-					$d['descripcion	']
+					$d['descripcion']
 				);
 			}
 
@@ -176,7 +174,6 @@ namespace db\models {
 	 */
 	public function delete(int $id)
 	{
-
 		$this->getQ()->delete('cursos', 'id', $id);
 	}
 

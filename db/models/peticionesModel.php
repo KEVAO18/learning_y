@@ -2,8 +2,6 @@
 
 namespace db\models {
 
-    require_once("../../http/config/sql.php");
-
     use db\models\user;
 
     use controller\sql as sql;
@@ -104,7 +102,7 @@ namespace db\models {
          * 
          * @since 16/10/2023
          * 
-         * @return $this objeto de tipo user
+         * @return $this objeto de tipo peticiones
          */
         public function find(string $op)
         {

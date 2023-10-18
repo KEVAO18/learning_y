@@ -2,29 +2,25 @@
 
 namespace db\models {
 
-    use controller\sql;
+
     use db\models\user;
     use db\models\curso;
+    use controller\sql;
 
-    class usu_curModel{
-        
-        private int $id;
-        
+    class creador_curso{
+
         private user $id_user;
 
         private curso $id_curso;
-
-        private int $state;
-
+        
         private sql $q;
 
         public function __construct() {
-
         }
 
         /**
          * 
-         * retorna un texto en formato json con los datos de usu_cur que contiene el objeto
+         * retorna un texto en formato json con los datos de creador_curso que contiene el objeto
          * 
          * @return string texto en formato json con datos que contiene el objeto
          * 
@@ -39,7 +35,7 @@ namespace db\models {
 
         /**
          * 
-         * retorna un array con los datos de usu_cur que contiene el objeto
+         * retorna un array con los datos de creador_curso que contiene el objeto
          * 
          * @return array array de los datos que contiene el objeto
          * 
@@ -48,26 +44,22 @@ namespace db\models {
         {
 
             return array(
-                "id" => $this->getId(),
                 "id_user" => $this->getIdUser(),
-                "id_curso" => $this->getIdCurso(),
-                "state" => $this->getState()
+                "id_curso" => $this->getIdCurso()
             );
 
         }
 
         /**
          * 
-         * retorna un texto con los datos de usu_cur que contiene el objeto
+         * retorna un texto con los datos de creador_curso que contiene el objeto
          * 
          * @return string texto con datos que contiene el objeto
          * 
          */
         public function toString()
         {
-            return "'".$this->getId().
-            "', '".$this->getIdUser()->getId().
-            "', '".$this->getState().
+            "'".$this->getIdUser()->getId().
             "', '".$this->getIdCurso()->getId()."'";
         }
 
@@ -76,26 +68,20 @@ namespace db\models {
          * 
          * @since 18/10/2023
          * 
-         * @param int $id
-         * 
          * @param user $id_user
          * 
          * @param curso $id_curso
          */
         public function setAll(
-            int $id,
             user $id_user,
-            curso $id_curso,
-            int $state
+            curso $id_curso
             ) {
-                $this->setId($id);
                 $this->setIdUser($id_user);
                 $this->setIdCurso($id_curso);
-                $this->setState($state);
         }
 
         /**
-         * busca una usu_cur y retorna un objeto de tipo usu_cur que contiene 
+         * busca un creador_curso y retorna un objeto de tipo creador_curso que contiene 
          * toda la informacion de este objeto
          * 
          * @param string $op codigo contenido del where que va a hacer la comparacion 
@@ -103,7 +89,7 @@ namespace db\models {
          * 
          * @since 16/10/2023
          * 
-         * @return $this objeto de tipo usu_cur
+         * @return $this objeto de tipo creador_curso
          */
         public function find(string $op)
         {
@@ -113,14 +99,12 @@ namespace db\models {
 
                 $temp_curso = new curso;
 
-                $datos = $this->getQ()->where('usu_cur', $op);
+                $datos = $this->getQ()->where('creador_curso', $op);
 
                 foreach ($datos as $d) {
                     $this->setAll(
-                        $d['id'],
                         $temp_user->find("id = ".$d['id_user']),
-                        $temp_curso->find("id = ".$d['id_curso']),
-                        $d['estado']
+                        $temp_curso->find("id = ".$d['id_curso'])
                     );
                 }
 
@@ -144,48 +128,36 @@ namespace db\models {
          * 
          */
         public function save(
-            int $id, 
             user $user, 
-            curso $curso, 
-            int $state
+            curso $curso
             ) {
             
-                $this->setId($id);
                 $this->setIdUser($user);
                 $this->setIdCurso($curso);
-                $this->setState($state);
 
-                $columnas = "id, id_user, id_curso, estado";
+                $columnas = "id_user, id_curso";
 
-                $this->getQ()->insert('usu_cur', $columnas, $this->toString());
+                $this->getQ()->insert('creador_curso', $columnas, $this->toString());
         }
 
         /**
          * elimina tupla de la base de datos
          * 
-         * @param int $id
+         * @param user $id
          */
-        public function delete(int $id)
+        public function deletePorUser(user $id)
         {
-            $this->getQ()->delete('usu_cur', 'id', $id);
+            $this->getQ()->delete('creador_curso', 'id_user', $id->getId());
         }
 
         /**
-         * Get the value of id
+         * elimina tupla de la base de datos
+         * 
+         * @param curso $id
          */
-        public function getId(): int
+        public function deletePorCurso(curso $id)
         {
-                return $this->id;
-        }
-
-        /**
-         * Set the value of id
-         */
-        public function setId(int $id): self
-        {
-                $this->id = $id;
-
-                return $this;
+            $this->getQ()->delete('creador_curso', 'id_curso', $id->getId());
         }
 
         /**
@@ -223,7 +195,7 @@ namespace db\models {
 
                 return $this;
         }
-        
+
         /**
          * Get the value of q
          */
@@ -242,23 +214,6 @@ namespace db\models {
                 return $this;
         }
 
-        /**
-         * Get the value of state
-         */
-        public function getState(): int
-        {
-                return $this->state;
-        }
-
-        /**
-         * Set the value of state
-         */
-        public function setState(int $state): self
-        {
-                $this->state = $state;
-
-                return $this;
-        }
     }
-    
+
 }

@@ -1,8 +1,6 @@
 <?php
 
 namespace db\models {
-    
-    require_once("../../http/config/sql.php");
 
     use controller\sql as sql;
 
