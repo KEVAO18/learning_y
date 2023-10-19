@@ -5,7 +5,6 @@ namespace http\handler {
     require_once("../../db/models/userModel.php");
     require_once("../config/sql.php");
 
-    use controller\sql as sql;
     use db\models\user as ModUser;
 
 
@@ -14,16 +13,10 @@ namespace http\handler {
 
         private $modeloRegistro;
 
-        private $sql;
-
         public function __construct()
         {
             $this->setModeloRegistro(
                 new ModUser
-            );
-
-            $this->setSql(
-                new sql
             );
         }
 
@@ -52,22 +45,6 @@ namespace http\handler {
             $this->modeloRegistro = $modeloRegistro;
 
             return $this;
-        }
-        
-        /**
-         * Get the value of sql
-         */
-        public function getSql(){
-                return $this->sql;
-        }
-
-        /**
-         * Set the value of sql
-         */
-        public function setSql($sql): self{
-                $this->sql = $sql;
-
-                return $this;
         }
     }
 }

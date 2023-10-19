@@ -2,6 +2,9 @@
 
 namespace view\components{
 
+    require_once("../http/handlers/cursosHandler.php");
+
+    use http\handler\cursoH;
     class cursoCard
     {
 
@@ -9,31 +12,35 @@ namespace view\components{
             
         }
 
-        function show() {
-            $datos = isset($_SESSION['userData']) ? true : false;
-
-            if(!$datos){
-                $this->outLog();
-            }else{
-                echo 
-                $this->logged(json_decode($_SESSION['userData']));
+        function showAll() {
+            $temp_curso = new cursoH;
+            $i = 1;
+            foreach ($temp_curso->optain() as $tc) {
+                if($i%2 == 1){
+                    ?>
+                        <div class="row">
+                    <?php
+                }
+                ?>
+                <div class="col-sm-6 my-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="display-6 text-center">
+                                <?=$tc->getNomCurso()?>
+                            </h2>
+                            <p class="text-center"><?=$tc->getProfesor()->getNombre()?></p>
+                            <p class="text-center"><?=$tc->getDescripcion()?></p>
+                        </div>
+                    </div>
+                </div>
+                <?php
+                if($i == 0 || $i%2 == 0){
+                    ?>
+                        </div>
+                    <?php
+                }
+                $i++;
             }
-        }
-
-        public function outLog(){
-            header("location: ".$_ENV['PAGE_SERVE']."/login");
-        }
-    
-        function logged($request){
-            ?>
-            <div class="card p-4">
-                <img src="<?=$_ENV['FOLDER_IMAGES']?>/default.jpg" class="rounded-circle img-profile mb-4" alt="Pruebas">
-                <div class="text-center mb-4 fs-4">Nombre: <?=$request->name?></div>
-                <div class="text-center mb-4 fs-4">Nombre de usuario: <?=$request->user?></div>
-                <div class="text-center mb-4 fs-4">Correo electronico: <?=$request->mail?></div>
-                <div class="text-center mb-4 fs-4">Cumpleaños: <?=$request->birthday?></div>
-            </div>
-            <?php
         }
     }
 }

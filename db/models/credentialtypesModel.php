@@ -2,6 +2,8 @@
 
 namespace db\models {
 
+    include_once("../../http/config/sql.php");
+
     use controller\sql as sql;
 
     class credentialsTypes
@@ -15,6 +17,7 @@ namespace db\models {
 
         public function __construct()
         {
+            $this->setQ(new sql);
         }
 
         /**

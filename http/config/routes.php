@@ -73,6 +73,8 @@ class routesController{
             } catch (\Throwable $th) {
 
                 $this->error();
+
+                echo $th;
                 
             }
         }else{

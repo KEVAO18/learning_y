@@ -2,6 +2,8 @@
 
 namespace db\models {
 
+    include_once("../../http/config/sql.php");
+
     use controller\sql as sql;
 
     /**
@@ -68,10 +70,9 @@ namespace db\models {
          */
         private sql $q;
 
-        public function __construct(){
-            $this->setQ(
-                new sql
-            );
+        public function __construct()
+        {
+            $this->setQ(new sql);
         }
 
         /**

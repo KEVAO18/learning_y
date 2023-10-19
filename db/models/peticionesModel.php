@@ -2,6 +2,9 @@
 
 namespace db\models {
 
+    include_once("../../http/config/sql.php");
+    include_once("userModel.php");
+
     use db\models\user;
 
     use controller\sql as sql;
@@ -22,6 +25,7 @@ namespace db\models {
 
         public function __construct()
         {
+            $this->setQ(new sql);
         }
 
         /**

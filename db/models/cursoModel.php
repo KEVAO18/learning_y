@@ -1,6 +1,11 @@
 <?php
 
+
 namespace db\models {
+	
+	include_once("userModel.php");
+
+	include_once("../../http/config/sql.php");
 
     use db\models\user;
 
@@ -14,12 +19,12 @@ namespace db\models {
 
 	private string $nom_curso;
 
-	private string $descipcion;
+	private string $descripcion;
 
 	private sql $q;
 
 	public function __construct() {
-		
+		$this->setQ(new sql);
 	}
 
 	/**
@@ -50,7 +55,7 @@ namespace db\models {
 			"id" => $this->getId(),
 			"profesor" =>$this->getProfesor()->toArray(),
 			"nombre" => $this->getNomCurso(),
-			"descripcion" => $this->getDescipcion()
+			"descripcion" => $this->getDescripcion()
 		);
 
 	}
@@ -67,7 +72,7 @@ namespace db\models {
 		return "'".$this->getId().
 			"', '".$this->getProfesor()->getId().
 			"', '".$this->getNomCurso().
-			"', '".$this->getDescipcion()."'";
+			"', '".$this->getDescripcion()."'";
 
 	}
 
@@ -93,7 +98,7 @@ namespace db\models {
 			$this->setId($id);
 			$this->setProfesor($profesor);
 			$this->setNomCurso($nom_curso);
-			$this->setDescipcion($descipcion);
+			$this->setDescripcion($descipcion);
 
 	}
 
@@ -127,7 +132,7 @@ namespace db\models {
 
 			return $this;
 		} catch (\Throwable $th) {
-			echo "Error";
+			echo "Error: ".$th;
 		}
 	}
 
@@ -234,17 +239,17 @@ namespace db\models {
 	/**
 	 * Get the value of descipcion
 	 */
-	public function getDescipcion(): string
+	public function getDescripcion(): string
 	{
-		return $this->descipcion;
+		return $this->descripcion;
 	}
 
 	/**
 	 * Set the value of descipcion
 	 */
-	public function setDescipcion(string $descipcion): self
+	public function setDescripcion(string $descipcion): self
 	{
-		$this->descipcion = $descipcion;
+		$this->descripcion = $descipcion;
 
 		return $this;
 	}
