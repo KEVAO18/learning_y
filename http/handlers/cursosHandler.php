@@ -39,7 +39,7 @@ namespace http\handler {
         /**
          * optener los cursos en un array de todos los cursos
          */
-        function optain()
+        public function optain()
         {
             $cursos = array();
 
@@ -53,6 +53,10 @@ namespace http\handler {
 
             return $cursos;
 
+        }
+
+        function opptainOne($id) {
+            return $c = (new curso)->find("id = ".$id);
         }
 
         /**

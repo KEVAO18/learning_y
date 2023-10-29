@@ -3,13 +3,13 @@
 require_once('components/cursoCard.php');
 require_once('components/profileCard.php');
 
-use view\components\profileCard;
-use view\components\cursoCard;
+use web\logged\components\profileCard as pc;
+use web\logged\components\cursoCard as cc;
 
 function show() {
 
-    $profileCard = new profileCard;
-    $cursoCard = new cursoCard;
+    $profileCard = new pc;
+    $cursoCard = new cc;
     
     ?>
         <div class="container-fluid py-4">

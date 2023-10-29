@@ -1,6 +1,62 @@
 # Learning Y PROJECT
 
+## Preparacion
+
+primero instalar el manejador de paquetes _COMPOSER_
+
+Acceder a la carpeta del proyecto desde la consola de comandos y ejecutar los siguientes comandos
+
+```batch
+composer install
+```
+
 ## DB
+
+- credentialstypes
+
+```sql
+create table credentialstypes(
+    `id` int(11) NOT NULL,
+    `description` varchar(50) NOT NULL,
+
+    PRIMARY KEY(id)
+);
+```
+
+- usuarios
+
+```sql
+CREATE TABLE `usuarios` (
+    `id` int(11) NOT NULL,
+    `name` varchar(60) NOT NULL,
+    `user` varchar(40) NOT NULL,
+    `mail` varchar(50) NOT NULL,
+    `password` varchar(100) NOT NULL,
+    `birthday` date NOT NULL,
+    `tyc` varchar(10) NOT NULL,
+
+    PRIMARY KEY (id)
+);
+```
+
+- cursos
+
+```sql
+CREATE TABLE `cursos` (
+    `id` int(11) NOT NULL,
+    `profesor` int(11) NOT NULL,
+    `nom_curso` varchar(40) NOT NULL,
+    `descripcion` text DEFAULT NULL,
+
+    PRIMARY KEY(id),
+
+    CONSTRAINT user_curso
+    FOREIGN KEY (profesor)
+    REFERENCES usuarios(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+```
 
 - creador_curso
 
@@ -25,24 +81,13 @@ create table creador_curso(
 );
 ```
 
-- credentialstypes
-
-```sql
-create table credentialstypes(
-    `id` int(11) NOT NULL,
-    `description` varchar(50) NOT NULL,
-
-    PRIMARY KEY(id)
-);
-```
-
 - credentials
 
 ```sql
 create table credentials(
     id int AUTO_INCREMENT,
     id_user int(11) not null,
-    credential_type int(2) not null,
+    credential_type int(11) not null DEFAULT 5,
     
     PRIMARY KEY (`id`, `id_user`),
     
@@ -50,24 +95,11 @@ create table credentials(
     FOREIGN KEY (`id_user`) 
     REFERENCES usuarios (id)
     ON DELETE CASCADE
-    ON UPDATE CASCADE
-);
-```
+    ON UPDATE CASCADE,
 
-- cursos
-
-```sql
-CREATE TABLE `cursos` (
-    `id` int(11) NOT NULL,
-    `profesor` int(11) NOT NULL,
-    `nom_curso` varchar(40) NOT NULL,
-    `descripcion` text DEFAULT NULL,
-
-    PRIMARY KEY(id),
-
-    CONSTRAINT user_curso
-    FOREIGN KEY (profesor)
-    REFERENCES usuarios(id)
+    CONSTRAINT type_credential
+    FOREIGN KEY (`credential_type`) 
+    REFERENCES credentialstypes (id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
 );
@@ -97,23 +129,7 @@ create table peticiones(
 );
 ```
 
-- usuarios
-
-```sql
-CREATE TABLE `usuarios` (
-    `id` int(11) NOT NULL,
-    `name` varchar(60) NOT NULL,
-    `user` varchar(40) NOT NULL,
-    `mail` varchar(50) NOT NULL,
-    `password` varchar(100) NOT NULL,
-    `birthday` date NOT NULL,
-    `tyc` varchar(10) NOT NULL,
-
-    PRIMARY KEY (id)
-);
-```
-
-- usuarios
+- usu_cur
 
 ```sql
 CREATE TABLE `usu_cur` (

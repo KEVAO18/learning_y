@@ -34,7 +34,7 @@ class routesController{
 
         if(!isset($_SESSION['userData'])){
             try {
-                @require_once('../web/'.$ruta['0'].'.php');
+                @require_once('../web/'.$ruta[0].'.php');
                 try {
                     show();
                 } catch (\Throwable $th) {
@@ -42,6 +42,17 @@ class routesController{
                 }
             } catch (\Throwable $th) {
                 $this->error();
+                ?>
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-sm-12 col-md-6">
+                        <a href="<?=$_ENV['PAGE_SERVE']?>/" class="btn btn-block btn-secondary text-center w-100">
+                            Volver al inicio
+                        </a>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+            <?php
             }
         }else{
             header("location: ".$_ENV['PAGE_SERVE']."/login");
@@ -59,10 +70,10 @@ class routesController{
 
         if(isset($_SESSION['userData'])){
             try {
-                @require_once('../web/logged/'.$ruta['0'].'.php');
+                @require_once('../web/logged/'.$ruta[0].'.php');
                 try {
 
-                    show();
+                    if (!isset($ruta[1])) show(); else show($ruta[1]);
 
                 } catch (\Throwable $th) {
 
@@ -74,7 +85,17 @@ class routesController{
 
                 $this->error();
 
-                echo $th;
+                ?>
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-sm-12 col-md-6">
+                            <a href="<?=$_ENV['PAGE_SERVE']?>/dashboard" class="btn btn-block btn-secondary text-center w-100">
+                                Volver al inicio
+                            </a>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+                <?php
                 
             }
         }else{

@@ -1,6 +1,6 @@
 <?php
 
-namespace view\components{
+namespace web\logged\components{
 
     class permisosCard{
         

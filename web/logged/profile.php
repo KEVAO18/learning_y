@@ -2,11 +2,11 @@
 
 require_once("components/profileCard.php");
 
-use view\components\profileCard;
+use web\logged\components\profileCard as pc;
 
 function show() {
 
-    $profileCard = new profileCard;
+    $profileCard = new pc;
     
     ?>
         <section class="container py-5">

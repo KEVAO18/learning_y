@@ -1,9 +1,8 @@
 <?php
 
-namespace view\components{
+namespace web\logged\components{
 
-    class profileCard
-    {
+    class profileCard{
 
         public function __construct() {
         }
@@ -31,10 +30,6 @@ namespace view\components{
                 <div class="text-center mb-4 fs-4">Nombre de usuario: <?=$request->user?></div>
                 <div class="text-center mb-4 fs-4">Correo electronico: <?=$request->mail?></div>
                 <div class="text-center mb-4 fs-4">Cumpleaños: <?=$request->birthday?></div>
-                <form action="<?=$_ENV['PAGE_SERVE']?>/http/controllers/credentialController.php" method="post">
-                    <input type="hidden" name="id" value="<?=$request->id?>">
-                    <button type="submit" class="btn btn-outline-dark w-100">Pedir acceso de maestro</button>
-                </form>
             </div>
             <?php
         }
