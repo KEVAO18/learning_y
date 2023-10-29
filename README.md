@@ -2,7 +2,7 @@
 
 ## Preparacion
 
-primero instalar el manejador de paquetes _COMPOSER_
+primero instalar el manejador de paquetes [_COMPOSER_](https://getcomposer.org/)
 
 Acceder a la carpeta del proyecto desde la consola de comandos y ejecutar los siguientes comandos
 
