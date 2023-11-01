@@ -33,4 +33,8 @@ require_once('web/layout/cssClases.php');
 
 $cssClases = new cssClases();
 
+require_once('web/layout/scripts.php');
+
+$jsScripts = new scripts();
+
 ?>

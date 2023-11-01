@@ -47,6 +47,9 @@ function logout() {
                                     <button class="btn btn-outline-primary" type="submit">Submit form</button>
                                 </div>
                             </form>
+                            <small>
+                                Aun no tienes una cuenta? <a href="<?=$_ENV["PAGE_SERVE"]?>/signup" class="text-center text-success text-decoration-none">registrate</a>
+                            </small>
                         </div>
                     </div>
                 </div>

@@ -9,6 +9,7 @@
   "author": "kevao18",
   "license": "ISC",
   "dependencies": {
-    "bootstrap": "^5.3.1"
+    "bootstrap": "^5.3.1",
+    "sweetalert": "^2.1.2"
   }
 }

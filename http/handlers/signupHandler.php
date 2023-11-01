@@ -25,9 +25,45 @@ namespace http\handler {
          */
         public function signUp($nombre, $user, $mail, $pass, $date, $tyc)
         {
+            $i = 0;
 
-            return $this->getModeloRegistro()->save(0, $nombre, $user, $mail, $pass, $date, $tyc);
+            try {
+                $datos = $this->getModeloRegistro()
+                ->find(
+                    "user = '".$user."'"
+                );
+    
+                if(($datos->getUser() != NULL)){
+                    return 2;
+                }
+    
+            } catch (\Throwable $th) {
+                try {
+                    $datos = $this->getModeloRegistro()
+                    ->find(
+                        "mail = '".$mail."'"
+                    );
+        
+                    if(($datos->getMail() != NULL)){
+                        return 3;
+                    }
+                } catch (\Throwable $th) {
 
+                    $this->getModeloRegistro()
+                    ->save(
+                        0, 
+                        $nombre, 
+                        $user, 
+                        $mail, 
+                        $pass, 
+                        $date, 
+                        $tyc
+                    );
+        
+                    return 1;
+                    
+                }
+            }
         }
 
 
