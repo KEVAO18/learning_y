@@ -3,10 +3,14 @@
 namespace http\handler {
 
     try {
+        require_once("../../db/models/usu_curModel.php");
+        require_once("../../db/models/userModel.php");
         require_once("../../db/models/cursoModel.php");
         require_once("../config/sql.php");
     } catch (\Throwable $th) {
         try {
+            require_once("../db/models/usu_curModel.php");
+            require_once("../db/models/userModel.php");
             require_once("../db/models/cursoModel.php");
             require_once("../http/config/sql.php");
         } catch (\Throwable $th) {
@@ -16,19 +20,21 @@ namespace http\handler {
 
     use controller\sql;
     use db\models\curso;
+    use db\models\user;
+    use db\models\usu_cur;
 
 
-    class cursoH
+    class usu_curH
     {
 
-        private curso $modeloOptain;
+        private usu_cur $modeloOptain;
 
         private sql $q;
 
         public function __construct()
         {
             $this->setModeloOptain(
-                new curso
+                new usu_cur
             );
 
             $this->setQ(
@@ -39,15 +45,22 @@ namespace http\handler {
         /**
          * optener los cursos en un array de todos los cursos
          */
-        public function optain()
+        public function optain($id_user)
         {
             $cursos = array();
 
-            $datos = $this->getQ()->All("cursos");
+            $datos = $this->optainAll($id_user);
 
-            foreach ($datos as $d) {
+            foreach($datos as $d){
 
-                array_push($cursos, $this->opptainOne($d['id']));
+                $this->getModeloOptain()->setAll(
+                    $d['id'], 
+                    (new user)->find("id = ".$d['id_user']), 
+                    (new curso)->find("id = ".$d['id_curso']), 
+                    $d['estado']
+                );
+
+                array_push($cursos, $this->getModeloOptain()->toArray());
 
             }
 
@@ -55,14 +68,14 @@ namespace http\handler {
 
         }
 
-        function opptainOne($id) {
-            return $c = (new curso)->find("id = ".$id);
+        function optainAll($id) {
+            return $this->getQ()->where('usu_cur', 'id_user = '.$id);
         }
 
         /**
          * Get the value of modeloOptain
          */
-        public function getModeloOptain(): curso
+        public function getModeloOptain(): usu_cur
         {
                 return $this->modeloOptain;
         }
@@ -70,7 +83,7 @@ namespace http\handler {
         /**
          * Set the value of modeloOptain
          */
-        public function setModeloOptain(curso $modeloOptain): self
+        public function setModeloOptain(usu_cur $modeloOptain): self
         {
                 $this->modeloOptain = $modeloOptain;
 

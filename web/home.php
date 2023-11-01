@@ -8,7 +8,7 @@ function show()
     if (!$datos) {
         outLogin();
     } else {
-        logged();
+        header("location: dashboard");
     }
 }
 
@@ -53,10 +53,6 @@ function outLogin()
         </article>
     </section>
 <?php
-}
-
-function logged(){
-
 }
 
 ?>

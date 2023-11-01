@@ -53,6 +53,7 @@ class routesController{
                     <div class="col-md-3"></div>
                 </div>
             <?php
+                header("location: ".$_ENV['PAGE_SERVE']."/login");
             }
         }else{
             header("location: ".$_ENV['PAGE_SERVE']."/login");
@@ -79,6 +80,8 @@ class routesController{
 
                     $this->error();
 
+                    echo $th;
+
                 }
 
             } catch (\Throwable $th) {
@@ -96,7 +99,7 @@ class routesController{
                         <div class="col-md-3"></div>
                     </div>
                 <?php
-                
+                header("location: ".$_ENV['PAGE_SERVE']."/dashboard");
             }
         }else{
             header("location: ".$_ENV['PAGE_SERVE']."/dashboard");
