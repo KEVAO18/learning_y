@@ -2,6 +2,7 @@
 
 namespace db\models {
 
+
     include_once("../../http/config/sql.php");
     include_once("userModel.php");
     include_once("cursoModel.php");
@@ -10,7 +11,7 @@ namespace db\models {
     use db\models\user;
     use db\models\curso;
 
-    class usu_curModel{
+    class usu_cur{
         
         private int $id;
         

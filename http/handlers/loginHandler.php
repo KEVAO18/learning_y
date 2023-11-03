@@ -23,10 +23,10 @@ namespace http\handler {
         /**
          * metodo manejador de los regostros, se encarga de comunicar las demas partes del con la base de datos
          */
-        function logIn($user, $pass)
+        function logIn($user)
         {
             return $this->getModeloRegistro()
-                    ->find("user = ".$user." AND password = ".$pass);
+                    ->find("user = '".$user."'");
         }
 
         /**

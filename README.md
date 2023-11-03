@@ -4,13 +4,19 @@
 
 primero instalar el manejador de paquetes [_COMPOSER_](https://getcomposer.org/)
 
-Acceder a la carpeta del proyecto desde la consola de comandos y ejecutar los siguientes comandos
+Acceder a la carpeta raiz del proyecto desde la consola de comandos y ejecutar los siguientes comandos
 
 ```batch
 composer install
 ```
 
 ## DB
+
+- primero creamos la base de datos
+
+```sql
+    create database eyProyect;
+```
 
 - credentialstypes
 
@@ -70,8 +76,8 @@ create table creador_curso(
     CONSTRAINT user_creador 
     FOREIGN KEY (id_user) 
     REFERENCES usuarios(id)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE, 
+    ON DELETE CASCADE
+    ON UPDATE CASCADE, 
     
     CONSTRAINT curso_creador 
     FOREIGN KEY (id_curso) 

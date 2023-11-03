@@ -47,7 +47,7 @@ namespace http\handler {
 
             foreach ($datos as $d) {
 
-                array_push($cursos, (new curso)->find("id = ".$d['id']));
+                array_push($cursos, $this->opptainOne($d['id']));
 
             }
 

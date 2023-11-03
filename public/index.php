@@ -28,10 +28,8 @@ require("../serve.php");
 	
 	<?php 
 		$footer->show($_ENV['APP_NAME']);	
-	?>
 
-	<!-- Bootstra -->
-	<script src="<?=$_ENV['PAGE_SERVE']?>/vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-	
+		$jsScripts->show();	
+	?>	
 </body>
 </html>

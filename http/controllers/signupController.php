@@ -6,16 +6,32 @@ use http\handler\signup;
 
 $signUp = new signup;
 
-$signUp->signUp(
+$verificacion = $signUp->signUp(
     $_POST['name'], 
     $_POST['user'], 
     $_POST['mail'], 
-    $_POST['pass'], 
+    password_hash($_POST['pass'], PASSWORD_BCRYPT),
     $_POST['date'], 
     $_POST['tyc']
 );
 
+if($verificacion == 1){
+    
+    header("location: ".$_ENV['PAGE_SERVE']."/login");
+    
+}else{
+    switch ($verificacion) {
+        case 2:
+            $_SESSION["error"] = "nombre de usuario en uso";
+            break;
 
-header("location: ".$_ENV['PAGE_SERVE']."/login");
+        case 3:
+            $_SESSION["error"] = "e-mail en uso";
+            break;
+    }
+    header("location: ".$_ENV['PAGE_SERVE']."/signup");
+}
+
+
 
 ?>

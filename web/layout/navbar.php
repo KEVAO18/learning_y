@@ -60,7 +60,7 @@ class navbar{
                             <ul class="dropdown-menu dropdown-menu-dark">
                                 <li><a class="dropdown-item" href="<?=$_ENV['PAGE_SERVE']?>/dashboard">dashboard</a></li>
                                 <li><a class="dropdown-item" href="<?=$_ENV['PAGE_SERVE']?>/profile">profile</a></li>
-                                <li><a class="dropdown-item" href="<?=$_ENV['PAGE_SERVE']?>/cursos/1">Cursos</a></li>
+                                <li><a class="dropdown-item" href="<?=$_ENV['PAGE_SERVE']?>/cursos">Cursos</a></li>
                                 <hr>
                                 <li><a class="dropdown-item" href="<?=$_ENV['PAGE_SERVE']?>/config">Configuration</a></li>
                                 <li><a class="dropdown-item" href="<?=$_ENV['PAGE_SERVE']?>/exit">exit</a></li>

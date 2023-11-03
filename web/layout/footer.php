@@ -24,20 +24,7 @@ class footer
                     <div class="col-md-4 mb-md-0 mb-3">
                         <h5 class="text-uppercase">More</h5>
 
-                        <ul class="list-unstyled">
-                            <li>
-                                <a class="text-decoration-none text-dark" href="#">Link 1</a>
-                            </li>
-                            <li>
-                                <a class="text-decoration-none text-dark" href="#">Link 2</a>
-                            </li>
-                            <li>
-                                <a class="text-decoration-none text-dark" href="#">Link 3</a>
-                            </li>
-                            <li>
-                                <a class="text-decoration-none text-dark" href="#">Link 4</a>
-                            </li>
-                        </ul>
+                        <?=(isset($_SESSION['userData']))? $this->log() : $this->out()?>
                     </div>
                 </div>
             </div>
@@ -45,6 +32,46 @@ class footer
                 <a class="text-decoration-none text-dark" href="https://mdbootstrap.com/education/angular/">Kevin Andres Orrego Martinez</a>
             </div>
         </footer>
+        <?php
+    }
+
+    public function log() {
+        ?>
+        
+        <ul class="list-unstyled">
+            <li>
+                <a class="text-decoration-none text-dark" href="#">Link 1</a>
+            </li>
+            <li>
+                <a class="text-decoration-none text-dark" href="#">Link 2</a>
+            </li>
+            <li>
+                <a class="text-decoration-none text-dark" href="#">Link 3</a>
+            </li>
+            <li>
+                <a class="text-decoration-none text-dark" href="#">Link 4</a>
+            </li>
+        </ul>
+
+        <?php
+    }
+    
+    public function out() {
+        ?>
+        
+        <ul class="list-unstyled">
+            <li>
+                <a class="text-decoration-none text-dark" href="<?=$_ENV['PAGE_SERVE']?>/home">Home</a>
+            </li>
+            <li>
+                <a class="text-decoration-none text-dark" href="<?=$_ENV['PAGE_SERVE']?>/login">Iniciar Sesion</a>
+            </li>
+            <li>
+                <a class="text-decoration-none text-dark" href="<?=$_ENV['PAGE_SERVE']?>/signup">Registrarte</a>
+            </li>
+
+        </ul>
+
         <?php
     }
 
