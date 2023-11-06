@@ -10,7 +10,7 @@ namespace db\models {
     use db\models\credentialsTypes;
     use controller\sql;
 
-    class credentialsModel
+    class credentials
     {
 
         private int $id;
@@ -97,7 +97,7 @@ namespace db\models {
             int $state
         ) {
 
-            $$this->setId($id);
+            $this->setId($id);
             $this->setIdUser($userId);
             $this->setCredentialType($credential);
             $this->setState($state);
@@ -134,7 +134,7 @@ namespace db\models {
 
                 return $this;
             } catch (\Throwable $th) {
-                echo "Error";
+                echo "Error en credentials, metodo find fallo: ".$th;
             }
         }
 
@@ -158,14 +158,18 @@ namespace db\models {
             int $state
         ) {
 
-            $this->setId($id);
-            $this->setIdUser($userId);
-            $this->setCredentialType($credential);
-            $this->setState($state);
+            try {
+                $this->setId($id);
+                $this->setIdUser($userId);
+                $this->setCredentialType($credential);
+                $this->setState($state);
 
-            $columnas = "id, id_user, credential_type, state";
+                $columnas = "id, id_user, credential_type, state";
 
-            $this->getQ()->insert('credentials', $columnas, $this->toString());
+                $this->getQ()->insert('credentials', $columnas, $this->toString());
+            } catch (\Throwable $th) {
+                echo "Error en credentials, metodo save fallo: ".$th;
+            }
         }
 
         /**

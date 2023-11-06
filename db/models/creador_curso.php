@@ -115,7 +115,7 @@ namespace db\models {
 
                 return $this;
             } catch (\Throwable $th) {
-                echo "Error";
+                echo "Error en Creador_curso, metodo find fallo: ".$th;
             }
         }
 
@@ -137,12 +137,16 @@ namespace db\models {
             curso $curso
             ) {
             
-                $this->setIdUser($user);
-                $this->setIdCurso($curso);
+                try {
+                    $this->setIdUser($user);
+                    $this->setIdCurso($curso);
 
-                $columnas = "id_user, id_curso";
+                    $columnas = "id_user, id_curso";
 
-                $this->getQ()->insert('creador_curso', $columnas, $this->toString());
+                    $this->getQ()->insert('creador_curso', $columnas, $this->toString());
+                } catch (\Throwable $th) {
+                    echo "Error en Creador_curso, metodo save fallo: ".$th;
+                }
         }
 
         /**

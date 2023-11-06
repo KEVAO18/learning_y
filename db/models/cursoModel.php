@@ -132,7 +132,7 @@ namespace db\models {
 
 			return $this;
 		} catch (\Throwable $th) {
-			echo "Error: ".$th;
+			echo "Error en curso, metodo find fallo: ".$th;
 		}
 	}
 
@@ -168,7 +168,7 @@ namespace db\models {
 
 			$this->getQ()->insert('cursos', $columnas, $this->toString());
 		} catch (\Throwable $th) {
-			echo "Error";
+			echo "Error en curso, metodo save fallo: ".$th;
 		}
 	}
 

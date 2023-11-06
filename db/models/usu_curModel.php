@@ -132,7 +132,7 @@ namespace db\models {
 
                 return $this;
             } catch (\Throwable $th) {
-                echo "Error";
+                echo "Error en usu_cur, metodo find fallo: ".$th;
             }
         }
 
@@ -156,14 +156,21 @@ namespace db\models {
             int $state
             ) {
             
-                $this->setId($id);
-                $this->setIdUser($user);
-                $this->setIdCurso($curso);
-                $this->setState($state);
+                
+                try {
 
-                $columnas = "id, id_user, id_curso, estado";
-
-                $this->getQ()->insert('usu_cur', $columnas, $this->toString());
+                    $this->setId($id);
+                    $this->setIdUser($user);
+                    $this->setIdCurso($curso);
+                    $this->setState($state);
+    
+                    $columnas = "id, id_user, id_curso, estado";
+    
+                    $this->getQ()->insert('usu_cur', $columnas, $this->toString());
+                    
+                } catch (\Throwable $th) {
+                    echo "Error en usu_cur, metodo save fallo: ".$th;
+                }
         }
 
         /**

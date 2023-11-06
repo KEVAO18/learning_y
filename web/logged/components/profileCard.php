@@ -8,13 +8,15 @@ namespace web\logged\components{
         }
 
         function show() {
-            $datos = isset($_SESSION['userData']) ? true : false;
 
-            if(!$datos){
+            if(!isset($_SESSION['userData']) && !isset($_SESSION['userCred'])){
                 $this->outLog();
             }else{
                 echo 
-                $this->logged(json_decode($_SESSION['userData']));
+                $this->logged(
+                    json_decode($_SESSION['userData']),
+                    json_decode($_SESSION['userCred'])
+                );
             }
         }
 
@@ -22,14 +24,15 @@ namespace web\logged\components{
             header("location: ".$_ENV['PAGE_SERVE']."/login");
         }
     
-        function logged($request){
+        function logged($ru, $rc){
             ?>
             <div class="card p-4">
                 <img src="<?=$_ENV['FOLDER_IMAGES']?>/default.jpg" class="rounded-circle img-profile mb-4" alt="Pruebas">
-                <div class="text-center mb-4 fs-4"><?=$request->name?></div>
-                <div class="text-center mb-4 fs-4">@<?=$request->user?></div>
-                <div class="text-center mb-4 fs-4"><?=$request->mail?></div>
-                <div class="text-center mb-4 fs-4"><?=$request->birthday?></div>
+                <div class="text-center mb-4 fs-5"><?=$ru->name?></div>
+                <div class="text-center mb-4 fs-5">@<?=$ru->user?></div>
+                <div class="text-center mb-4 fs-5"><?=$rc->description?></div>
+                <div class="text-center mb-4 fs-5"><?=$ru->mail?></div>
+                <div class="text-center mb-4 fs-5"><?=$ru->birthday?></div>
             </div>
             <?php
         }

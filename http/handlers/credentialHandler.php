@@ -7,8 +7,9 @@ namespace http\handler {
     require_once("../config/sql.php");
 
     use controller\sql as sql;
-    use db\models\credentialsModel as ModCred;
-
+    use db\models\credentials as ModCred;
+    use db\models\credentialsTypes;
+    use db\models\user;
 
     class credential
     {
@@ -31,29 +32,14 @@ namespace http\handler {
         /**
          * metodo manejador de los regostros, se encarga de comunicar las demas partes del con la base de datos
          */
-        function addCredential($id_user, $type)
+        function addCredential(user $id_user, credentialsTypes $type)
         {
 
-            $this->getmodeloCred()
-                    ->setIdUser(
-                        'NULL'
-                    );
-
-            $this->getmodeloCred()
-                    ->setIdUser(
-                        $id_user
-                    );
-
-            $this->getmodeloCred()
-                    ->setCredentialType(
-                        $type
-                    );
-
-            return $this->getSql()
-            ->insert(
-                "credentials",
-                "`id`, `id_user`, `credential_type`",
-                $this->getmodeloCred()->toString()
+            $this->getmodeloCred()->save(
+                0,
+                $id_user,
+                $type,
+                1
             );
 
         }

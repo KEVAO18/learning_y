@@ -109,7 +109,7 @@ namespace db\models {
 
                 return $this;
             } catch (\Throwable $th) {
-                echo "Error";
+                echo "Error en credentialtypes, metodo find fallo: ".$th;
             }
         }
 
@@ -136,7 +136,7 @@ namespace db\models {
 
                 $this->getQ()->insert('credentialstypes', $columnas, $this->toString());
             } catch (\Throwable $th) {
-                echo "Error";
+                echo "Error en credentialtypes, metodo save fallo: ".$th;
             }
         }
 
