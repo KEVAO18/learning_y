@@ -9,7 +9,7 @@ namespace db\models {
 
     use controller\sql as sql;
 
-    class peticionesModel
+    class peticiones
     {
 
         private int $id;
@@ -126,7 +126,8 @@ namespace db\models {
 
                 return $this;
             } catch (\Throwable $th) {
-                echo "Error";
+                echo "Error en peticiones, metodo find fallo: ".$th;
+
             }
         }
 
@@ -157,7 +158,7 @@ namespace db\models {
 
                 $this->getQ()->insert('peticiones', $columnas, $this->toString());
             } catch (\Throwable $th) {
-                echo "Error";
+                echo "Error en peticiones, metodo save fallo: ".$th;
             }
         }
 

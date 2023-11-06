@@ -89,7 +89,6 @@ namespace db\models {
                 "name" => $this->getNombre(),
                 "user" =>$this->getUser(),
                 "mail" => $this->getMail(),
-                "password" => $this->getPassword(),
                 "birthday" => $this->getBirthday(),
                 "tyc" => $this->getTyc()
             );
@@ -198,7 +197,7 @@ namespace db\models {
     
                 return $this;
             } catch (\Throwable $th) {
-                echo "Error";
+                echo "Error en user, metodo find fallo: ".$th;
             }
 
         }
@@ -232,6 +231,7 @@ namespace db\models {
             string $tyc
             ) {
             
+            try {
                 $this->setId($id);
                 $this->setNombre($nombre);
                 $this->setUser($user);
@@ -243,6 +243,9 @@ namespace db\models {
                 $columnas = "id, name, user, mail, password, birthday, tyc";
 
                 $this->getQ()->insert('usuarios', $columnas, $this->toString());
+            } catch (\Throwable $th) {
+                echo "Error en user, metodo save fallo: ".$th;
+            }
         }
 
         /**
@@ -253,6 +256,70 @@ namespace db\models {
         public function delete(int $id) {
 
             $this->getQ()->delete('usuarios', 'id', $id);
+
+        }
+
+        /**
+         * actualizar nombre
+         * 
+         * @param int $id
+         * 
+         * @param string $newName
+         */
+        public function updateName( 
+            int $id, 
+            string $newName
+            ) {
+
+                $this->getQ()->update('usuarios', 1, 'name', $id, $newName);
+
+        }
+
+        /**
+         * actualizar usuario
+         * 
+         * @param int $id
+         * 
+         * @param string $newUser
+         */
+        public function updateUser( 
+            int $id, 
+            string $newUser
+            ) {
+
+                $this->getQ()->update('usuarios', 1, 'user', $id, $newUser);
+
+        }
+
+        /**
+         * actualizar email
+         * 
+         * @param int $id
+         * 
+         * @param string $newMail
+         */
+        public function updatemail( 
+            int $id, 
+            string $newMail
+            ) {
+
+                $this->getQ()->update('usuarios', 1, 'mail', $id, $newMail);
+
+        }
+
+        /**
+         * actualizar contraseña
+         * 
+         * @param int $id
+         * 
+         * @param string $newPass
+         */
+        public function updatepass( 
+            int $id, 
+            string $newPass
+            ) {
+
+                $this->getQ()->update('usuarios', 1, 'password', $id, password_hash($newPass, PASSWORD_BCRYPT));
 
         }
 

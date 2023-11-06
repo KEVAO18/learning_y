@@ -9,13 +9,16 @@ function show() {
     ?>
         <div class="container-fluid py-4">
             <section class="row">
-                <article class="col-md-3">
+                <article class="col-md-3 d-none d-md-block">
                     <?=$profileCard->show()?>
                 </article>
-                <article class="col-md-9">
+                <article class="col-md-7">
                     <div class="card">
                         
                     </div>
+                </article>
+                <article class="col-md-2 d-none d-md-block">
+                    
                 </article>
             </section>
         </div>

@@ -3,21 +3,31 @@
 namespace http\handler {
 
     require_once("../../db/models/userModel.php");
+    require_once("credentialHandler.php");
+
+    use db\models\credentialsTypes;
     use db\models\user as ModUser;
+    use http\handler\credential;
 
 
     class signup
     {
 
-        private $modeloRegistro;
+        private ModUser $modeloRegistro;
 
-        private $sql;
+        private credential $credH;
 
         public function __construct()
         {
+
             $this->setModeloRegistro(
                 new ModUser
             );
+
+            $this->setCredH(
+                new credential
+            );
+
         }
 
         /**
@@ -59,18 +69,24 @@ namespace http\handler {
                         $date, 
                         $tyc
                     );
-        
+
+                    $this->getCredH()->addCredential(
+                        $this->getModeloRegistro()->find(
+                            "user = '".$user."'"
+                        ),
+                        (new credentialsTypes)->find("id = 5")
+                    );
+
                     return 1;
                     
                 }
             }
         }
 
-
         /**
          * Get the value of modeloRegistro
          */
-        public function getModeloRegistro()
+        public function getModeloRegistro(): ModUser
         {
             return $this->modeloRegistro;
         }
@@ -78,28 +94,31 @@ namespace http\handler {
         /**
          * Set the value of modeloRegistro
          */
-        public function setModeloRegistro($modeloRegistro): self
+        public function setModeloRegistro(ModUser $modeloRegistro): self
         {
             $this->modeloRegistro = $modeloRegistro;
 
             return $this;
         }
-        
+
         /**
-         * Get the value of sql
+         * Get the value of credH
          */
-        public function getSql(){
-                return $this->sql;
+        public function getCredH(): credential
+        {
+            return $this->credH;
         }
 
         /**
-         * Set the value of sql
+         * Set the value of credH
          */
-        public function setSql($sql): self{
-                $this->sql = $sql;
+        public function setCredH(credential $credH): self
+        {
+            $this->credH = $credH;
 
-                return $this;
+            return $this;
         }
+
     }
 
 }

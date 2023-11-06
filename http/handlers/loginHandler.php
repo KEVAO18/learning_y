@@ -3,7 +3,6 @@
 namespace http\handler {
 
     require_once("../../db/models/userModel.php");
-    require_once("../config/sql.php");
 
     use db\models\user as ModUser;
 
