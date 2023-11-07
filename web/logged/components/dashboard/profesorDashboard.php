@@ -16,7 +16,9 @@ namespace web\logged\components\dashboard{
 
         public function show() {
             ?>
+
             <h2 class="display-5">Tablero de Profesor</h2>
+
             <?php
         }
     }

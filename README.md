@@ -31,6 +31,13 @@ create table credentialstypes(
 
     PRIMARY KEY(id)
 );
+
+INSERT INTO `credentialstypes` (`id`, `description`) VALUES
+(1, 'Administrador'),
+(2, 'Soporte'),
+(3, 'Profesor'),
+(4, 'Alumno especial'),
+(5, 'alumno');
 ```
 
 - usuarios
