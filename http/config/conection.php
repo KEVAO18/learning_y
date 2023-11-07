@@ -5,15 +5,8 @@ namespace controller{
     use PDO;
     use PDOException;
 
-    try {
-        require_once("../../serve.php");
-    } catch (\Throwable $th) {
-        try {
-            require_once("../serve.php");
-        } catch (\Throwable $th) {
-            require_once("serve.php");
-        }
-    }
+    require_once(__DIR__."/../../serve.php");
+
     
     class conection
     {

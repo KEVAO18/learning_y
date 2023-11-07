@@ -2,9 +2,9 @@
 
 namespace db\models {
 
-    include_once("../../http/config/sql.php");
-    include_once("userModel.php");
-    include_once("credentialtypesModel.php");
+    include_once(__DIR__."/../../http/config/sql.php");
+    include_once(__DIR__."/userModel.php");
+    include_once(__DIR__."/credentialtypesModel.php");
 
     use db\models\user;
     use db\models\credentialsTypes;
@@ -78,6 +78,36 @@ namespace db\models {
         }
 
         /**
+         * retorna un array con todas las tuplas de la tabla
+         */
+        public function getAll() {
+
+            try {
+                
+                $datos = $this->getQ()->All('credentials');
+                
+                $array = array();
+    
+                foreach ($datos as $d) {
+                    $dato = new credentials;
+
+                    array_push($array, $dato->find("id = ".$d['id']));
+                }
+    
+                return $array;
+
+            } catch (\Throwable $th) {
+
+                echo "Error en credentials, metodo getAll fallo: ".$th;
+                
+                return array();
+
+            }
+
+
+        }
+
+        /**
          * asigna un valor a todos los atributos de la clase
          * 
          * @since 18/10/2023
@@ -126,8 +156,8 @@ namespace db\models {
                 foreach ($datos as $d) {
                     $this->setAll(
                         $d['id'],
-                        $temp_user->find($d['id_user']),
-                        $temp_credentype->find($d['credential_type']),
+                        $temp_user->find("id =".$d['id_user']),
+                        $temp_credentype->find("id = ".$d['credential_type']),
                         $d['state']
                     );
                 }

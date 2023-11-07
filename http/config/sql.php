@@ -2,7 +2,7 @@
 
 namespace controller {
 
-	require_once("conection.php");
+	require_once(__DIR__."/conection.php");
 
 	use controller\conection as connect;
 

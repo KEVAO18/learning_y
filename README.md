@@ -2,12 +2,16 @@
 
 ## Preparacion
 
-primero instalar el manejador de paquetes [_COMPOSER_](https://getcomposer.org/)
+primero instalar el manejador de paquetes [_COMPOSER_](https://getcomposer.org/) y [_NODE_](https://nodejs.org/en)
 
 Acceder a la carpeta raiz del proyecto desde la consola de comandos y ejecutar los siguientes comandos
 
 ```batch
 composer install
+```
+
+```batch
+npm install
 ```
 
 ## DB
@@ -53,6 +57,7 @@ CREATE TABLE `cursos` (
     `profesor` int(11) NOT NULL,
     `nom_curso` varchar(40) NOT NULL,
     `descripcion` text DEFAULT NULL,
+    `contenidos` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '{["0": "sin contenidos"]}' CHECK (json_valid(`contenidos`)) ,
 
     PRIMARY KEY(id),
 
