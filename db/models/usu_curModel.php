@@ -78,6 +78,34 @@ namespace db\models {
         }
 
         /**
+         * retorna un array con todas las tuplas de la tabla
+         */
+        public function getAll() {
+            
+            try {
+                
+                $datos = $this->getQ()->All('usu_cur');
+                
+                $array = array();
+                
+                foreach ($datos as $d) {
+                    $dato = new usu_cur;
+
+                    array_push($array, $dato->find("id = ".$d['id']));
+                }
+                
+                return $array;
+                
+            } catch (\Throwable $th) {
+                
+                echo "Error en peticiones, metodo getAll fallo: ".$th;
+                
+                return array();
+
+            }
+        }
+
+        /**
          * asigna un valor a todos los atributos de la clase
          * 
          * @since 18/10/2023

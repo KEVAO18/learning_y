@@ -66,6 +66,35 @@ namespace db\models {
         }
 
         /**
+         * retorna un array con todas las tuplas de la tabla
+         */
+        public function getAll() {
+            
+            try {
+                
+                $datos = $this->getQ()->All('credentialstypes');
+                
+                $array = array();
+    
+                foreach ($datos as $d) {
+                    $dato = new credentialsTypes;
+
+                    array_push($array, $dato->find("id = ".$d['id']));
+                }
+    
+                return $array;
+                
+            } catch (\Throwable $th) {
+                
+                echo "Error en credentialtypes, metodo getAll fallo: ".$th;
+                
+                return array();
+
+            }
+
+        }
+
+        /**
          * asigna un valor a todos los atributos de la clase
          * 
          * @since 18/10/2023

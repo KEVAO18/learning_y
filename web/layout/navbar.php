@@ -66,6 +66,21 @@ class navbar{
                                 <li><a class="dropdown-item" href="<?=$_ENV['PAGE_SERVE']?>/exit">exit</a></li>
                             </ul>
                         </li>
+                        <?php
+                            if ((json_decode($_SESSION['userCred'])->description == "Administrador") || (json_decode($_SESSION['userCred'])->description == "Soporte")) {
+                                ?>
+                        <li class="nav-item dropdown">
+                            <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                Panel de administracion
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="<?=$_ENV['PAGE_SERVE']?>/Tabla/all">Todos los usuarios</a></li>
+                                <li><a class="dropdown-item" href="<?=$_ENV['PAGE_SERVE']?>/Tabla/porCargo">Por cargo</a></li>
+                            </ul>
+                        </li>
+                                <?php
+                            }
+                        ?>  
                     </ul>
                 </div>
             </div>

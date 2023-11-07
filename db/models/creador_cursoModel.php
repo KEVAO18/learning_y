@@ -68,6 +68,36 @@ namespace db\models {
             "', '".$this->getIdCurso()->getId()."'";
         }
 
+
+        /**
+         * retorna un array con todas las tuplas de la tabla
+         */
+        public function getAll() {
+
+            try {
+                $datos = $this->getQ()->All('creador_curso');
+            
+                $array = array();
+    
+                foreach ($datos as $d) {
+
+                    $dato = new creador_curso;
+
+                    array_push($array, $dato->find("id_user = ".$d['id_user']));
+
+                }
+    
+                return $array;
+            } catch (\Throwable $th) {
+
+                echo "Error en Creador_curso, metodo getAll fallo: ".$th;
+
+                return array();
+                
+            }
+
+        }
+
         /**
          * asigna un valor a todos los atributos de la clase
          * 

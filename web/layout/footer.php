@@ -40,16 +40,16 @@ class footer
         
         <ul class="list-unstyled">
             <li>
-                <a class="text-decoration-none text-dark" href="#">Link 1</a>
+                <a class="text-decoration-none text-dark" href="<?=$_ENV['PAGE_SERVE']?>/dashboard">dashboard</a>
             </li>
             <li>
-                <a class="text-decoration-none text-dark" href="#">Link 2</a>
+                <a class="text-decoration-none text-dark" href="<?=$_ENV['PAGE_SERVE']?>/profile">profile</a>
             </li>
             <li>
-                <a class="text-decoration-none text-dark" href="#">Link 3</a>
+                <a class="text-decoration-none text-dark" href="<?=$_ENV['PAGE_SERVE']?>/cursos">cursos</a>
             </li>
             <li>
-                <a class="text-decoration-none text-dark" href="#">Link 4</a>
+                <a class="text-decoration-none text-dark" href="<?=$_ENV['PAGE_SERVE']?>/configuraciones">configuraciones</a>
             </li>
         </ul>
 

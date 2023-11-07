@@ -9,7 +9,7 @@ require("../serve.php");
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title><?=$_ENV['APP_NAME']." - ".$_GET['p']?></title>
+	<title><?=$_ENV['APP_NAME']?></title>
 	<?php
 		$cssClases->show();
 	?>

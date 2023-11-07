@@ -6,9 +6,7 @@ require_once("../../db/models/credentialsModel.php");
 use db\models\credentials;
 use http\handler\login;
 
-$login = new login;
-
-$data = $login->logIn(
+$data = (new login)->logIn(
     explode("'", $_POST['user'])[0]
 );
 

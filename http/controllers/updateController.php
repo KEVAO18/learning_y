@@ -23,8 +23,6 @@
         case 0:
             
             $_SESSION['userData'] = (new user)->find("id =".$id)->toJson();
-
-            $_SESSION['userCred'] = (new credentials)->find("id_user = ".$id)->getCredentialType()->toJson();
             
             header("location: ".$_ENV['PAGE_SERVE']."/configuraciones");
             
