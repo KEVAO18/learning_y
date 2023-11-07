@@ -27,28 +27,6 @@ function show() {
                     <div class="card p-4">
                         <?php
                         
-                        // switch(json_decode($_SESSION['userCred'])->description){
-
-                        //     case 'Administrador':
-                        //         (new admin)->showAll();
-                        //         break;
-                            
-                        //         case 'Soporte':
-                        //         (new soporte)->showAll();
-                        //         break;
-                            
-                        //         case 'Profesor':
-                        //         (new profesor)->show();
-                        //         break;
-                            
-                        //         case 'Alumno especial':
-                        //         (new alumnoEspecial)->show();
-                        //         break;
-                            
-                        //         case 'alumno':
-                        //         (new alumno)->show();
-                        //         break;
-                        // }
                         
                         ?>
                     </div>
