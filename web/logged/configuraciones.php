@@ -83,6 +83,12 @@ function show() {
                     </div>
                 </div>
             </div>
+            <div class="d-grid">
+                <form action="<?=$_ENV['PAGE_SERVE']?>/http/controllers/deleteController.php" method="post">
+                    <input type="hidden" name="id" value="<?=json_decode($_SESSION['userData'])->id?>">
+                    <button type="submit" class="btn btn-block btn-outline-danger">Eliminar mi cuenta</button>
+                </form>
+            </div>
         </div>
     </div>
     

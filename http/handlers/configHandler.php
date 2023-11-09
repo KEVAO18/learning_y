@@ -18,6 +18,15 @@ namespace http\handler {
             );
         }
 
+        public function deleteAccount($id) {
+            try {
+                $this->getModUser()->delete($id);
+                return 0;
+            } catch (\Throwable $th) {
+                return $th;
+            }
+        }
+
         public function updatePersonalI(int $id, string $name, string $user, string $mail) {
 
             try {

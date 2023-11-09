@@ -40,7 +40,10 @@ namespace web\logged\components\tablas{
                                 <?php
                                 if(json_decode($_SESSION['userCred'])->description == "Administrador"){
                                     ?>
-                                    <!-- <a href="" class="btn btn-outline-danger">ban</a> -->
+                                    <form action="<?=$_ENV['PAGE_SERVE']?>/http/controllers/banController.php" method="post">
+                                        <input type="hidden" name="id" value="<?=$d->getIdUser()->getId()?>">
+                                        <button type="submit" class="btn btn-block btn-outline-danger">Banear esta cuenta</button>
+                                    </form>
                                     <?php
                                 }
                                 ?>
