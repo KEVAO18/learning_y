@@ -36,6 +36,7 @@ namespace web\logged\components{
         }
 
         public function card(curso $data) {
+            $desc = substr($data->getDescripcion(), 0, 200);
             ?>
                 <div class="col-sm-6 my-2">
                     <div class="card">
@@ -44,7 +45,7 @@ namespace web\logged\components{
                                 <?=$data->getNomCurso()?>
                             </h2>
                             <p class="text-center"><?=$data->getProfesor()->getNombre()?></p>
-                            <p class="text-center"><?=$data->getDescripcion()?></p>
+                            <p class="text-center"><?=$desc?></p>
                             <div class="d-grid">
                                 <a class="btn btn-block btn-outline-dark" href="<?=$_ENV['PAGE_SERVE']?>/curso/<?=$data->getId()?>">Ver curso</a>
                             </div>

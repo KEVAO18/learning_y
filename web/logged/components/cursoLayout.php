@@ -45,67 +45,29 @@ namespace web\logged\components{
                             <h4 class="display-5 text-center">Contenidos</h4>
                             <hr>
                             <div id="recursos">
+                                <?php
+                                foreach (json_decode($data->getContenido()) as $d) {
+                                    ?>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="text-center">
+                                                <h6 class="display-5 text-success py-2 text-wrap"><?=print_r($d)?></h6>
+                                                <ul class="list-group py-4">
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
                             </div>
-                            </table>
                         </div>
                     </div>
                     <div class="d-grid">
                         <a href="" class="btn btn-block btn-outline-success">Inscribirse</a>
                     </div>
                 </div>
-                <script>
-                    var domTable = document.getElementById("recursos");
-
-                    fetch(
-
-                    '<?=$_ENV['PAGE_SERVE']?>/db/cursos/<?=$id?>.json'
-
-                    ).then(
-
-                        response => response.json()
-
-                    ).then(
-                        data => {
-                            for(d in data){
-                                var addThis = `
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="text-center">
-                                                <h6 class="display-5 text-success py-2 text-wrap">`+d+`</h6>
-                                                <ul class="list-group py-4">
-                                `
-                                for(d2 in data[d][0]){
-                                    addThis += `
-                                                    <li class="list-group-item text-wrap">`+d2+`</li>
-                                    `
-                                }
-                                addThis += `
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                `
-                                domTable.innerHTML += addThis
-                            }
-                        }
-                    ).catch( 
-                        error => {
-
-                            var addThis = `
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="text-center">
-                                                <h6 class="display-5 text-success py-2 text-wrap">Sin Informacion</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                `
-                                domTable.innerHTML += addThis
-
-                        } 
-                            
-                    );
-                </script>
             <?php
         }
     }

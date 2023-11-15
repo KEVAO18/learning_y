@@ -16,7 +16,7 @@ namespace http\handler {
 
     use controller\sql;
     use db\models\curso;
-
+    use db\models\user;
 
     class cursoH
     {
@@ -57,6 +57,26 @@ namespace http\handler {
 
         function opptainOne($id) {
             return $c = (new curso)->find("id = ".$id);
+        }
+
+        public function newCurso(
+            $id_profesor, 
+            $nom_curso, 
+            $desc, 
+            $content
+            ) {
+            try {
+                $this->getModeloOptain()->save(
+                    0,
+                    (new user)->find("id = ".$id_profesor),
+                    $nom_curso,
+                    $desc,
+                    $content
+                );
+                return "ok";
+            } catch (\Throwable $th) {
+                return "Error en newCurso: ".$th;
+            }
         }
 
         /**

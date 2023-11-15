@@ -75,7 +75,7 @@ namespace db\models {
 			return "'".$this->getId().
 				"', '".$this->getProfesor()->getId().
 				"', '".$this->getNomCurso().
-				"', '".$this->getDescripcion();
+				"', '".$this->getDescripcion().
 				"', '".$this->getContenido()."'";
 
 		}
@@ -196,7 +196,6 @@ namespace db\models {
 		) {
 
 			try {
-				$user = new user;
 
 				$this->setAll(
 					$id,
@@ -205,6 +204,8 @@ namespace db\models {
 					$descipcion,
 					$contenidos
 				);
+
+				print($this->toString());
 
 				$columnas = "id, profesor, nom_curso, descripcion, contenidos";
 
