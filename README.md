@@ -14,7 +14,7 @@ composer install
 npm install
 ```
 
-## DB
+## DB: MySQL
 
 - primero creamos la base de datos
 
