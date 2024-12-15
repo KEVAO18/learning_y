@@ -105,7 +105,7 @@ create table creador_curso(
 create table credentials(
     id int AUTO_INCREMENT,
     id_user int(11) not null,
-    credential_type int(11) not null DEFAULT 5,
+    credential_type int(11) not null,
     
     PRIMARY KEY (`id`, `id_user`),
     
